@@ -1,0 +1,127 @@
+.profile {
+  min-height: 100vh;
+  background: #F7F7F7;
+  padding: 24px 24px 60px;
+}
+
+.card {
+  background: #fff;
+  border-radius: 24px;
+  padding: 40px 32px;
+}
+
+.head-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 28px;
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.06);
+}
+
+.avatar {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: #58CC02;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 80px;
+}
+
+.nickname {
+  font-size: 38px;
+  font-weight: 800;
+  color: #3C3C3C;
+  margin-top: 20px;
+}
+
+.level-tag {
+  margin-top: 12px;
+  background: #D7FFB8;
+  color: #58A700;
+  font-size: 26px;
+  font-weight: 700;
+  padding: 8px 24px;
+  border-radius: 999px;
+}
+
+.level-bar {
+  width: 100%;
+  height: 24px;
+  background: #E5E5E5;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-top: 32px;
+}
+
+.level-bar-fill {
+  height: 100%;
+  background: #FFC800;
+  border-radius: 12px;
+  transition: width 0.3s;
+}
+
+.level-tip {
+  font-size: 24px;
+  color: #AFB3B5;
+  margin-top: 12px;
+}
+
+.grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-bottom: 28px;
+}
+
+.grid-item {
+  width: calc(50% - 10px);
+  background: #fff;
+  border-radius: 24px;
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.06);
+}
+
+.grid-num {
+  font-size: 40px;
+  font-weight: 800;
+
+  &.streak { color: #FF9600; }
+  &.xp { color: #FFC800; }
+  &.heart { color: #FF4B4B; }
+  &.done { color: #58CC02; }
+}
+
+.grid-label {
+  font-size: 24px;
+  color: #AFB3B5;
+  margin-top: 12px;
+}
+
+.btn.danger {
+  background: #FF4B4B;
+  border-radius: 20px;
+  padding: 28px 0;
+  text-align: center;
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.12);
+}
+
+.btn-text {
+  color: #fff;
+  font-size: 32px;
+  font-weight: 800;
+}
+
+.about {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 48px;
+  color: #AFB3B5;
+  font-size: 24px;
+  line-height: 1.8;
+}

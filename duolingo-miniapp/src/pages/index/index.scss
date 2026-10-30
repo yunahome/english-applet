@@ -1,0 +1,177 @@
+.home {
+  min-height: 100vh;
+  background: #F7F7F7;
+  padding: 24px 24px 60px;
+}
+
+.stats {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  margin-bottom: 24px;
+}
+
+.stat {
+  display: flex;
+  align-items: center;
+}
+
+.stat-icon {
+  font-size: 34px;
+  margin-right: 8px;
+}
+
+.stat-value {
+  font-size: 32px;
+  font-weight: 800;
+
+  &.stat-streak { color: #FF9600; }
+  &.stat-heart { color: #FF4B4B; }
+  &.stat-xp { color: #FFC800; }
+  &.stat-level { color: #58CC02; }
+}
+
+.banner {
+  background: linear-gradient(135deg, #58CC02, #89E219);
+  border-radius: 24px;
+  padding: 40px 32px;
+  margin-bottom: 28px;
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08);
+}
+
+.banner-title {
+  display: block;
+  color: #fff;
+  font-size: 44px;
+  font-weight: 800;
+}
+
+.banner-sub {
+  display: block;
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 26px;
+  margin-top: 10px;
+}
+
+/* ====== 进行中/已完成单元 ====== */
+.unit {
+  border-radius: 24px;
+  padding: 28px;
+  margin-bottom: 28px;
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.1);
+}
+
+.unit-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.unit-title {
+  color: #fff;
+  font-size: 32px;
+  font-weight: 800;
+  flex: 1;
+}
+
+.unit-progress {
+  color: rgba(255, 255, 255, 0.95);
+  font-size: 28px;
+  font-weight: 800;
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 999px;
+  padding: 6px 20px;
+}
+
+/* 100 关网格 */
+.lesson-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.lesson-node {
+  width: calc((100% - 64px) / 5);
+  aspect-ratio: 1;
+  background: #fff;
+  border-radius: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 3px solid rgba(0, 0, 0, 0.06);
+
+  &.locked {
+    opacity: 0.45;
+  }
+
+  &.done {
+    border: 3px solid #FFC800;
+    background: #FFFBEB;
+  }
+}
+
+.lesson-node-icon {
+  font-size: 30px;
+  font-weight: 800;
+  color: #3C3C3C;
+}
+
+/* ====== 锁定单元卡片 ====== */
+.unit-card {
+  border-radius: 24px;
+  padding: 32px 28px;
+  margin-bottom: 28px;
+}
+
+.locked-card {
+  background: #fff;
+  border: 3px dashed #E0E0E0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  opacity: 0.9;
+}
+
+.locked-left {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.locked-icon {
+  font-size: 48px;
+  margin-right: 20px;
+}
+
+.locked-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.locked-title {
+  font-size: 30px;
+  font-weight: 800;
+  color: #3C3C3C;
+}
+
+.locked-sub {
+  font-size: 24px;
+  color: #AFB3B5;
+  margin-top: 8px;
+}
+
+.locked-count {
+  font-size: 26px;
+  color: #AFB3B5;
+  font-weight: 700;
+}
+
+.footer-tip {
+  text-align: center;
+  padding: 20px 30px;
+  color: #AFB3B5;
+  font-size: 24px;
+  line-height: 1.6;
+}

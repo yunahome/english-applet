@@ -1,0 +1,297 @@
+.lesson {
+  min-height: 100vh;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+}
+
+.lesson-missing {
+  padding: 100px 40px;
+  text-align: center;
+  color: #AFB3B5;
+}
+
+.lesson-header {
+  display: flex;
+  align-items: center;
+  padding: 28px 28px 12px;
+}
+
+.lesson-close {
+  font-size: 36px;
+  color: #AFB3B5;
+  padding: 0 20px 0 0;
+}
+
+.progress-track {
+  flex: 1;
+  height: 28px;
+  background: #E5E5E5;
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.progress-fill {
+  height: 100%;
+  background: #58CC02;
+  border-radius: 14px;
+  transition: width 0.3s;
+}
+
+.lesson-hearts {
+  font-size: 30px;
+  padding-left: 20px;
+  color: #FF4B4B;
+  font-weight: 700;
+}
+
+.repractice-banner {
+  margin: 8px 28px 0;
+  background: #FFF4D6;
+  border-radius: 14px;
+  padding: 14px 24px;
+}
+
+.repractice-text {
+  color: #B97D0B;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.lesson-body {
+  flex: 1;
+  padding: 40px 32px 220px;
+}
+
+.lesson-question {
+  display: block;
+  font-size: 38px;
+  font-weight: 800;
+  color: #3C3C3C;
+  margin-bottom: 40px;
+  line-height: 1.5;
+}
+
+/* 选择题 */
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.option {
+  width: calc(50% - 10px);
+  border: 3px solid #E5E5E5;
+  border-bottom-width: 6px;
+  border-radius: 20px;
+  padding: 36px 24px;
+  text-align: center;
+  font-size: 32px;
+  color: #3C3C3C;
+
+  &.active {
+    border-color: #84D8FF;
+    background: #DDF4FF;
+  }
+
+  &.right {
+    border-color: #58CC02;
+    background: #D7FFB8;
+  }
+}
+
+/* 组句题 */
+.answer-zone {
+  min-height: 200px;
+  border: 3px dashed #E5E5E5;
+  border-radius: 20px;
+  padding: 24px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  align-content: flex-start;
+}
+
+.answer-zone-tip {
+  color: #CFCFCF;
+  font-size: 28px;
+}
+
+.divider {
+  height: 3px;
+  background: #F0F0F0;
+  margin: 32px 0;
+  border-radius: 2px;
+}
+
+.bank {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.word {
+  background: #fff;
+  border: 3px solid #E5E5E5;
+  border-bottom-width: 6px;
+  border-radius: 16px;
+  padding: 20px 28px;
+  font-size: 30px;
+  color: #3C3C3C;
+
+  &.used {
+    opacity: 0.35;
+  }
+}
+
+/* 底部按钮区 */
+.lesson-footer {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 28px 32px calc(28px + env(safe-area-inset-bottom));
+
+  &.footer-correct {
+    background: #D7FFB8;
+  }
+
+  &.footer-wrong {
+    background: #FFDFE0;
+  }
+}
+
+.check-btn {
+  background: #58CC02;
+  border-radius: 20px;
+  padding: 30px 0;
+  text-align: center;
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.12);
+
+  &.disabled {
+    background: #E5E5E5;
+    box-shadow: none;
+  }
+}
+
+.check-btn-text {
+  color: #fff;
+  font-size: 34px;
+  font-weight: 800;
+}
+
+.feedback {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.feedback-title {
+  display: block;
+  font-size: 36px;
+  font-weight: 800;
+}
+
+.feedback-answer {
+  display: block;
+  font-size: 28px;
+  margin-top: 8px;
+}
+
+.feedback-text.correct .feedback-title {
+  color: #58A700;
+}
+
+.feedback-text.wrong .feedback-title,
+.feedback-text.wrong .feedback-answer {
+  color: #EA2B2B;
+}
+
+.feedback-btn {
+  background: #58CC02;
+  border-radius: 20px;
+  padding: 26px 70px;
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.12);
+}
+
+.feedback-btn-text {
+  color: #fff;
+  font-size: 34px;
+  font-weight: 800;
+}
+
+/* 弹窗 */
+.overlay {
+  position: fixed;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99;
+}
+
+.result-card {
+  width: 80%;
+  background: #fff;
+  border-radius: 28px;
+  padding: 60px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.result-emoji {
+  font-size: 90px;
+}
+
+.result-title {
+  font-size: 44px;
+  font-weight: 800;
+  color: #3C3C3C;
+  margin-top: 20px;
+}
+
+.result-xp {
+  font-size: 36px;
+  font-weight: 800;
+  color: #FFC800;
+  margin-top: 16px;
+}
+
+.result-sub {
+  font-size: 28px;
+  color: #AFB3B5;
+  margin-top: 12px;
+  line-height: 1.6;
+}
+
+.result-btn {
+  width: 100%;
+  background: #58CC02;
+  border-radius: 20px;
+  padding: 28px 0;
+  margin-top: 40px;
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.12);
+
+  &.ghost {
+    background: #fff;
+    border: 3px solid #E5E5E5;
+    box-shadow: none;
+    margin-top: 20px;
+  }
+}
+
+.result-btn-text {
+  color: #fff;
+  font-size: 32px;
+  font-weight: 800;
+
+  &.ghost {
+    color: #3C3C3C;
+  }
+}
