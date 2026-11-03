@@ -35,7 +35,7 @@ export default function Lesson() {
   const [xpEarned, setXpEarned] = useState(0)
   const [lastWrongAnswer, setLastWrongAnswer] = useState('')
 
-  // 每 30 秒检查一次红心按时间恢复（30 分钟恢复 1 颗）
+  // 每 30 秒检查一次红心按时间恢复（10 分钟恢复 1 颗）
   useEffect(() => {
     refreshHearts()
     const timer = setInterval(refreshHearts, 30 * 1000)
@@ -349,7 +349,7 @@ export default function Lesson() {
             <Text className='result-emoji'>😢</Text>
             <Text className='result-title'>闯关失败</Text>
             <Text className='result-sub'>
-              红心已耗尽，本关未完成。红心将随时间恢复（每 30 分钟 +1），恢复后重新闯关即可。
+              红心已耗尽，本关未完成。红心将随时间恢复（每 10 分钟 +1），恢复后重新闯关即可。
             </Text>
             <View className='result-btn ghost' onClick={backToMap}>
               <Text className='result-btn-text ghost'>返回地图</Text>

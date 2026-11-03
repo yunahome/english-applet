@@ -6,8 +6,8 @@ import { initCloud, uploadProgress, downloadProgress } from '../services/cloud'
 
 /** 最大红心数，模仿多邻国 */
 export const MAX_HEARTS = 5
-/** 每 30 分钟恢复 1 颗红心 */
-export const HEART_REFILL_INTERVAL = 30 * 60 * 1000
+/** 每 10 分钟恢复 1 颗红心 */
+export const HEART_REFILL_INTERVAL = 10 * 60 * 1000
 /** 用积分兑换红心：100 积分换满 5 颗 */
 export const HEART_EXCHANGE_COST = 100
 const STORAGE_KEY = 'duo_app_state_v2'
