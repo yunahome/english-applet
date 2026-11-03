@@ -47,18 +47,52 @@ function normalizeSpeakText(text: string): string {
  */
 const CLOUD_AUDIO_PREFIX = 'cloud://dev-d1go1t1hm3ca66be2.6465-dev-d1go1t1hm3ca66be2-1520659687'
 
+// 临时 URL 缓存：避免每次发音都调用 getTempFileURL
+const tempUrlCache = new Map<string, string>()
+
+/** 将 cloud:// fileID 转换为可播放的临时 https 链接 */
+async function resolveAudioSrc(fileID: string): Promise<string> {
+  const cached = tempUrlCache.get(fileID)
+  if (cached) return cached
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const res: any = await Taro.cloud.getTempFileURL({ fileList: [fileID] })
+  const item = res?.fileList?.[0]
+  if (item?.status === 0 && item.tempFileURL) {
+    tempUrlCache.set(fileID, item.tempFileURL)
+    return item.tempFileURL
+  }
+  // 取不到临时链接时，回退直接尝试（某些基础库版本支持 cloud:// 直连）
+  return fileID
+}
+
 /** 播放英文发音；无对应音频时静默忽略 */
 export function speak(text: string): void {
   const key = sanitizeKey(normalizeSpeakText(text))
   if (!key) return
-  try {
-    const a = getAudio()
-    a.stop()
-    a.src = CLOUD_AUDIO_PREFIX
-      ? `${CLOUD_AUDIO_PREFIX}/audio/${key}.mp3`
-      : `/assets/audio/${key}.mp3`
-    a.play()
-  } catch (err) {
-    // 音频缺失或播放失败不影响答题流程
+  const fileID = CLOUD_AUDIO_PREFIX
+    ? `${CLOUD_AUDIO_PREFIX}/audio/${key}.mp3`
+    : `/assets/audio/${key}.mp3`
+
+  const play = (src: string) => {
+    try {
+      const a = getAudio()
+      a.stop()
+      a.src = src
+      a.play()
+    } catch (err) {
+      // 音频缺失或播放失败不影响答题流程
+    }
+  }
+
+  // 云端音频需先把 fileID 转成临时 https 链接
+  if (fileID.startsWith('cloud://')) {
+    resolveAudioSrc(fileID)
+      .then((src) => play(src))
+      .catch(() => {
+        /* 忽略 */
+      })
+  } else {
+    play(fileID)
   }
 }
