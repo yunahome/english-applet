@@ -42,13 +42,18 @@ function normalizeSpeakText(text: string): string {
 /**
  * 云存储配置：音频 fileID 前缀（cloud://环境ID.存储桶名）。
  * 通过 getTempFileURL 把 fileID 转成临时 https 链接播放。
+ * ⚠️ 存储桶名需在「云开发 → 存储」里点开任意 mp3 查看其「文件 ID」获得，
+ *    格式：cloud://<环境ID>.<桶名>/audio/xxx.mp3
  */
-const CLOUD_AUDIO_PREFIX = 'cloud://dev-d1go1t1hm3ca66be2.6465-dev-d1go1t1hm3ca66be2-1520659687'
+const CLOUD_ENV = 'dev-d1go1t1hm3ca66be2'
 
 /**
- * 音频在云存储中的子目录名。为空表示文件直接放在存储桶根目录。
- * 上传时若拖进了名为 audio 的文件夹，这里填 'audio'；若直接拖到根目录，这里填空字符串。
+ * 存储桶名（fileID 里 环境ID. 之后、/audio 之前的那段）。
+ * 之前的桶名是从截图读的，可能有误；若发音仍无声，请从云存储复制真实桶名填这里。
  */
+const CLOUD_BUCKET = '6465-dev-d1go1t1hm3ca66be2-1520659687'
+
+/** 音频在云存储中的子目录名（上传时拖进的文件夹名）。 */
 const CLOUD_AUDIO_DIR = 'audio'
 
 // 临时 URL 缓存：避免每次发音都调用 getTempFileURL（临时链接有效期约 2 小时）
@@ -67,8 +72,7 @@ async function resolveAudioSrc(fileID: string): Promise<string | null> {
       tempUrlCache.set(fileID, item.tempFileURL)
       return item.tempFileURL
     }
-    // status !== 0 表示文件不存在或权限不足
-    console.warn('[speech] getTempFileURL 失败', fileID, item)
+    console.warn('[speech] getTempFileURL 失败（文件可能不存在或桶名错误）', fileID, 'status=', item?.status, 'err=', item?.errMsg)
     return null
   } catch (err) {
     console.warn('[speech] getTempFileURL 异常', fileID, err)
@@ -96,14 +100,14 @@ export function speak(text: string): void {
   }
 
   // 未配置云环境时，回退到本地路径
-  if (!CLOUD_AUDIO_PREFIX) {
+  if (!CLOUD_ENV || !CLOUD_BUCKET) {
     play(`/assets/audio/${key}.mp3`)
     return
   }
 
-  // 拼接 fileID：子目录存在则带目录前缀
+  // 拼接完整 fileID：cloud://环境ID.桶名/子目录/文件名
   const dir = CLOUD_AUDIO_DIR ? `${CLOUD_AUDIO_DIR}/` : ''
-  const fileID = `${CLOUD_AUDIO_PREFIX}/${dir}${key}.mp3`
+  const fileID = `cloud://${CLOUD_ENV}.${CLOUD_BUCKET}/${dir}${key}.mp3`
 
   resolveAudioSrc(fileID).then((src) => {
     if (src) play(src)

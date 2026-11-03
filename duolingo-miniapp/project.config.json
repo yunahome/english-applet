@@ -4,7 +4,7 @@
   "projectname": "duolingo-miniapp",
   "appid": "wx9ed13f9f8cbcf771",
   "setting": {
-    "urlCheck": true,
+    "urlCheck": false,
     "es6": false,
     "enhance": false,
     "compileHotReLoad": false,
