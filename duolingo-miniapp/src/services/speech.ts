@@ -45,7 +45,7 @@ function normalizeSpeakText(text: string): string {
  * 把控制台里任意一个文件的 fileID 前缀（cloud://环境ID.存储桶名）填到这里。
  * 为空字符串时使用本地路径。
  */
-const CLOUD_AUDIO_PREFIX = '' // 例：'cloud://dev-d1go1t1hm3ca66be2.6465-dev-d1go1t1hm3ca66be2-1330069340'
+const CLOUD_AUDIO_PREFIX = 'cloud://dev-d1go1t1hm3ca66be2.6465-dev-d1go1t1hm3ca66be2-1520659687'
 
 /** 播放英文发音；无对应音频时静默忽略 */
 export function speak(text: string): void {
