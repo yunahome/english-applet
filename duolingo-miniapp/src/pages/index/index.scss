@@ -1,65 +1,85 @@
+/* 学习地图页 · 扁平卡通风格 */
 .home {
   min-height: 100vh;
-  background: #F7F7F7;
+  background: linear-gradient(180deg, #EAF7E0 0%, #F7F7F7 30%);
   padding: 24px 24px 60px;
 }
 
+/* ===== 顶部状态栏 ===== */
 .stats {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 12px 20px;
-  margin-bottom: 24px;
+  padding: 16px 8px 20px;
 }
 
 .stat {
   display: flex;
   align-items: center;
+  gap: 6px;
 }
 
 .stat-icon {
-  font-size: 34px;
-  margin-right: 8px;
+  font-size: 36px;
+  filter: drop-shadow(0 2px 0 rgba(0, 0, 0, 0.08));
 }
 
 .stat-value {
-  font-size: 32px;
-  font-weight: 800;
+  font-size: 30px;
+  font-weight: 900;
+  letter-spacing: -0.5px;
 
-  &.stat-streak { color: #FF9600; }
-  &.stat-heart { color: #FF4B4B; }
-  &.stat-xp { color: #FFC800; }
-  &.stat-level { color: #58CC02; }
+  &.stat-streak { color: var(--duo-orange); }
+  &.stat-heart { color: var(--duo-red); }
+  &.stat-xp { color: var(--duo-yellow); }
+  &.stat-level { color: var(--duo-green); }
 }
 
+/* ===== 顶部横幅 ===== */
 .banner {
-  background: linear-gradient(135deg, #58CC02, #89E219);
-  border-radius: 24px;
+  background: linear-gradient(135deg, #58CC02, #7FE21A);
+  border-radius: 28px;
   padding: 40px 32px;
   margin-bottom: 28px;
-  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 0 #4A9F02;
+  position: relative;
+  overflow: hidden;
+}
+
+.banner::after {
+  content: '';
+  position: absolute;
+  right: -20px;
+  top: -20px;
+  width: 120px;
+  height: 120px;
+  background: rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
 }
 
 .banner-title {
   display: block;
   color: #fff;
-  font-size: 44px;
-  font-weight: 800;
+  font-size: 46px;
+  font-weight: 900;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.1);
 }
 
 .banner-sub {
   display: block;
-  color: rgba(255, 255, 255, 0.9);
+  color: rgba(255, 255, 255, 0.95);
   font-size: 26px;
   margin-top: 10px;
+  font-weight: 600;
 }
 
-/* ====== 进行中/已完成单元 ====== */
+/* ===== 进行中/已完成单元 ===== */
 .unit {
-  border-radius: 24px;
-  padding: 28px;
+  border-radius: 28px;
+  padding: 28px 24px;
   margin-bottom: 28px;
-  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 0 rgba(0, 0, 0, 0.12);
 }
 
 .unit-header {
@@ -71,16 +91,18 @@
 
 .unit-title {
   color: #fff;
-  font-size: 32px;
-  font-weight: 800;
+  font-size: 34px;
+  font-weight: 900;
+  letter-spacing: 0.5px;
   flex: 1;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.08);
 }
 
 .unit-progress {
-  color: rgba(255, 255, 255, 0.95);
-  font-size: 28px;
-  font-weight: 800;
-  background: rgba(0, 0, 0, 0.15);
+  color: #fff;
+  font-size: 26px;
+  font-weight: 900;
+  background: rgba(0, 0, 0, 0.16);
   border-radius: 999px;
   padding: 6px 20px;
 }
@@ -89,49 +111,56 @@
 .lesson-grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 14px;
 }
 
 .lesson-node {
-  width: calc((100% - 64px) / 5);
+  width: calc((100% - 56px) / 5);
   aspect-ratio: 1;
   background: #fff;
-  border-radius: 20px;
+  border-radius: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border: 3px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
+  transition: transform 0.1s;
+
+  &:active {
+    transform: translateY(2px);
+    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.1);
+  }
 
   &.locked {
-    opacity: 0.45;
+    opacity: 0.4;
+    box-shadow: none;
   }
 
   &.done {
-    border: 3px solid #FFC800;
     background: #FFFBEB;
+    box-shadow: 0 4px 0 #E6A800;
+    border: 2px solid var(--duo-yellow);
   }
 }
 
 .lesson-node-icon {
   font-size: 30px;
-  font-weight: 800;
+  font-weight: 900;
   color: #3C3C3C;
 }
 
-/* ====== 锁定单元卡片 ====== */
+/* ===== 锁定单元卡片 ===== */
 .unit-card {
-  border-radius: 24px;
+  border-radius: 28px;
   padding: 32px 28px;
   margin-bottom: 28px;
 }
 
 .locked-card {
   background: #fff;
-  border: 3px dashed #E0E0E0;
+  border: 3px dashed #D8D8D8;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  opacity: 0.9;
 }
 
 .locked-left {
@@ -141,8 +170,10 @@
 }
 
 .locked-icon {
-  font-size: 48px;
+  font-size: 52px;
   margin-right: 20px;
+  filter: grayscale(1);
+  opacity: 0.7;
 }
 
 .locked-info {

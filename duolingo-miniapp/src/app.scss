@@ -1,9 +1,31 @@
-/* 多邻国风格全局样式 */
+/* ============================================================
+   Duo英语 · 扁平卡通风格全局样式
+   设计语言：多邻国式「厚底按钮 + 大圆角 + 高饱和纯色 + 立体阴影」
+   ============================================================ */
+
+/* 设计变量 */
 page {
+  --duo-green: #58CC02;
+  --duo-green-dark: #58A700;
+  --duo-green-light: #D7FFB8;
+  --duo-blue: #1CB0F6;
+  --duo-blue-dark: #1899D6;
+  --duo-blue-light: #DDF4FF;
+  --duo-yellow: #FFC800;
+  --duo-orange: #FF9600;
+  --duo-red: #FF4B4B;
+  --duo-red-dark: #EA2B2B;
+  --duo-purple: #CE82FF;
+  --duo-text: #3C3C3C;
+  --duo-text-sub: #AFB3B5;
+  --duo-border: #E5E5E5;
+  --duo-bg: #F7F7F7;
+
   font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', sans-serif;
-  background: #fff;
-  color: #3C3C3C;
+  background: var(--duo-bg);
+  color: var(--duo-text);
   font-size: 32px;
+  -webkit-font-smoothing: antialiased;
 }
 
 view, text, button {

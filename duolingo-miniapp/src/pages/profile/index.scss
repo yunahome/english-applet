@@ -1,12 +1,13 @@
+/* 我的页 · 扁平卡通风格 */
 .profile {
   min-height: 100vh;
-  background: #F7F7F7;
+  background: linear-gradient(180deg, #EAF7E0 0%, #F7F7F7 30%);
   padding: 24px 24px 60px;
 }
 
 .card {
   background: #fff;
-  border-radius: 24px;
+  border-radius: 28px;
   padding: 40px 32px;
 }
 
@@ -15,23 +16,24 @@
   flex-direction: column;
   align-items: center;
   margin-bottom: 28px;
-  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.06);
+  box-shadow: 0 8px 0 rgba(0, 0, 0, 0.06);
 }
 
 .avatar {
   width: 140px;
   height: 140px;
   border-radius: 50%;
-  background: #58CC02;
+  background: linear-gradient(135deg, #58CC02, #7FE21A);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 80px;
+  box-shadow: 0 6px 0 #4A9F02;
 }
 
 .nickname {
   font-size: 38px;
-  font-weight: 800;
+  font-weight: 900;
   color: #3C3C3C;
   margin-top: 20px;
 }
@@ -41,7 +43,7 @@
   background: #D7FFB8;
   color: #58A700;
   font-size: 26px;
-  font-weight: 700;
+  font-weight: 800;
   padding: 8px 24px;
   border-radius: 999px;
 }
@@ -57,7 +59,7 @@
 
 .level-bar-fill {
   height: 100%;
-  background: #FFC800;
+  background: linear-gradient(90deg, #FFC800, #FFD84D);
   border-radius: 12px;
   transition: width 0.3s;
 }
@@ -88,7 +90,8 @@
 
 .grid-num {
   font-size: 40px;
-  font-weight: 800;
+  font-weight: 900;
+  letter-spacing: -0.5px;
 
   &.streak { color: #FF9600; }
   &.xp { color: #FFC800; }
@@ -103,17 +106,24 @@
 }
 
 .btn.danger {
-  background: #FF4B4B;
+  background: linear-gradient(135deg, #FF5B5B, #FF4B4B);
   border-radius: 20px;
   padding: 28px 0;
   text-align: center;
-  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0 6px 0 #D93636;
+  transition: transform 0.1s;
+
+  &:active {
+    transform: translateY(3px);
+    box-shadow: 0 3px 0 #D93636;
+  }
 }
 
 .btn-text {
   color: #fff;
   font-size: 32px;
-  font-weight: 800;
+  font-weight: 900;
+  letter-spacing: 1px;
 }
 
 .about {

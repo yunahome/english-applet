@@ -1,3 +1,4 @@
+/* 答题闯关页 · 扁平卡通风格 */
 .lesson {
   min-height: 100vh;
   background: #fff;
@@ -11,6 +12,7 @@
   color: #AFB3B5;
 }
 
+/* ===== 顶部：退出 + 进度条 + 红心 ===== */
 .lesson-header {
   display: flex;
   align-items: center;
@@ -33,7 +35,7 @@
 
 .progress-fill {
   height: 100%;
-  background: #58CC02;
+  background: linear-gradient(90deg, #58CC02, #7FE21A);
   border-radius: 14px;
   transition: width 0.3s;
 }
@@ -42,22 +44,24 @@
   font-size: 30px;
   padding-left: 20px;
   color: #FF4B4B;
-  font-weight: 700;
+  font-weight: 900;
 }
 
 .repractice-banner {
   margin: 8px 28px 0;
   background: #FFF4D6;
-  border-radius: 14px;
+  border-radius: 16px;
   padding: 14px 24px;
+  box-shadow: 0 4px 0 #F0DCB0;
 }
 
 .repractice-text {
   color: #B97D0B;
   font-size: 24px;
-  font-weight: 600;
+  font-weight: 700;
 }
 
+/* ===== 题目区 ===== */
 .lesson-body {
   flex: 1;
   padding: 40px 32px 220px;
@@ -66,7 +70,7 @@
 .lesson-question {
   display: block;
   font-size: 38px;
-  font-weight: 800;
+  font-weight: 900;
   color: #3C3C3C;
   margin-bottom: 40px;
   line-height: 1.5;
@@ -88,28 +92,38 @@
   text-align: center;
   font-size: 32px;
   color: #3C3C3C;
+  background: #fff;
+  transition: transform 0.1s;
+
+  &:active {
+    transform: translateY(2px);
+    border-bottom-width: 4px;
+  }
 
   &.active {
     border-color: #84D8FF;
     background: #DDF4FF;
+    box-shadow: 0 4px 0 #1899D6;
   }
 
   &.right {
     border-color: #58CC02;
     background: #D7FFB8;
+    box-shadow: 0 4px 0 #58A700;
   }
 }
 
 /* 组句题 */
 .answer-zone {
   min-height: 200px;
-  border: 3px dashed #E5E5E5;
+  border: 3px dashed #D8D8D8;
   border-radius: 20px;
   padding: 24px;
   display: flex;
   flex-wrap: wrap;
   gap: 16px;
   align-content: flex-start;
+  background: #FAFAFA;
 }
 
 .answer-zone-tip {
@@ -138,13 +152,20 @@
   padding: 20px 28px;
   font-size: 30px;
   color: #3C3C3C;
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.06);
+  transition: transform 0.1s;
+
+  &:active {
+    transform: translateY(2px);
+    border-bottom-width: 4px;
+  }
 
   &.used {
     opacity: 0.35;
   }
 }
 
-/* 底部按钮区 */
+/* ===== 底部按钮区 ===== */
 .lesson-footer {
   position: fixed;
   left: 0;
@@ -162,11 +183,17 @@
 }
 
 .check-btn {
-  background: #58CC02;
-  border-radius: 20px;
+  background: linear-gradient(135deg, #58CC02, #6FDD1A);
+  border-radius: 22px;
   padding: 30px 0;
   text-align: center;
-  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0 6px 0 #4A9F02;
+  transition: transform 0.1s;
+
+  &:active {
+    transform: translateY(3px);
+    box-shadow: 0 3px 0 #4A9F02;
+  }
 
   &.disabled {
     background: #E5E5E5;
@@ -177,7 +204,9 @@
 .check-btn-text {
   color: #fff;
   font-size: 34px;
-  font-weight: 800;
+  font-weight: 900;
+  letter-spacing: 2px;
+  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.08);
 }
 
 .feedback {
@@ -189,7 +218,7 @@
 .feedback-title {
   display: block;
   font-size: 36px;
-  font-weight: 800;
+  font-weight: 900;
 }
 
 .feedback-answer {
@@ -208,19 +237,26 @@
 }
 
 .feedback-btn {
-  background: #58CC02;
+  background: linear-gradient(135deg, #58CC02, #6FDD1A);
   border-radius: 20px;
   padding: 26px 70px;
-  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0 6px 0 #4A9F02;
+  transition: transform 0.1s;
+
+  &:active {
+    transform: translateY(3px);
+    box-shadow: 0 3px 0 #4A9F02;
+  }
 }
 
 .feedback-btn-text {
   color: #fff;
   font-size: 34px;
-  font-weight: 800;
+  font-weight: 900;
+  letter-spacing: 2px;
 }
 
-/* 弹窗 */
+/* ===== 弹窗 ===== */
 .overlay {
   position: fixed;
   left: 0;
@@ -235,30 +271,38 @@
 }
 
 .result-card {
-  width: 80%;
+  width: 82%;
   background: #fff;
-  border-radius: 28px;
-  padding: 60px 40px;
+  border-radius: 32px;
+  padding: 56px 40px;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
+  box-shadow: 0 8px 0 rgba(0, 0, 0, 0.12);
 }
 
 .result-emoji {
-  font-size: 90px;
+  font-size: 96px;
+  animation: bounce 0.6s ease;
+}
+
+@keyframes bounce {
+  0% { transform: scale(0.5); }
+  60% { transform: scale(1.15); }
+  100% { transform: scale(1); }
 }
 
 .result-title {
   font-size: 44px;
-  font-weight: 800;
+  font-weight: 900;
   color: #3C3C3C;
   margin-top: 20px;
 }
 
 .result-xp {
-  font-size: 36px;
-  font-weight: 800;
+  font-size: 38px;
+  font-weight: 900;
   color: #FFC800;
   margin-top: 16px;
 }
@@ -272,11 +316,17 @@
 
 .result-btn {
   width: 100%;
-  background: #58CC02;
+  background: linear-gradient(135deg, #58CC02, #6FDD1A);
   border-radius: 20px;
   padding: 28px 0;
   margin-top: 40px;
-  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.12);
+  box-shadow: 0 6px 0 #4A9F02;
+  transition: transform 0.1s;
+
+  &:active {
+    transform: translateY(3px);
+    box-shadow: 0 3px 0 #4A9F02;
+  }
 
   &.ghost {
     background: #fff;
@@ -289,7 +339,8 @@
 .result-btn-text {
   color: #fff;
   font-size: 32px;
-  font-weight: 800;
+  font-weight: 900;
+  letter-spacing: 1px;
 
   &.ghost {
     color: #3C3C3C;
