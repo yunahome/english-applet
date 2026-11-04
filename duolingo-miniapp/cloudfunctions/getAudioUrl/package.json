@@ -1,0 +1,9 @@
+{
+  "name": "getAudioUrl",
+  "version": "1.0.0",
+  "description": "中转获取音频临时播放链接",
+  "main": "index.js",
+  "dependencies": {
+    "wx-server-sdk": "~2.6.3"
+  }
+}
