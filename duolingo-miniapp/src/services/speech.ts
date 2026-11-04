@@ -2,8 +2,10 @@ import Taro from '@tarojs/taro'
 
 /**
  * 发音服务：播放预生成的 mp3 音频。
- * 文件由 scripts/gen_audio_edge.py 生成（Edge-TTS en-US-AriaNeural）。
  * 通过云函数 getAudioUrl 中转获取临时播放链接（管理端权限，绕过存储安全规则限制）。
+ * 优化：
+ *  - 临时链接本地持久化缓存（2 小时内复用，跨页面/跨启动免调云函数）
+ *  - 支持批量预取（一次云函数调用取多个词的链接）
  */
 
 let audio: ReturnType<typeof Taro.createInnerAudioContext> | null = null
@@ -38,31 +40,99 @@ function normalizeSpeakText(text: string): string {
   return t
 }
 
-// 临时 URL 缓存：避免每次发音都调云函数（临时链接有效期约 2 小时）
-const tempUrlCache = new Map<string, string>()
+// 本地持久化缓存的 key
+const CACHE_STORAGE_KEY = 'duo_audio_url_cache'
+// 临时链接有效期（微信 getTempFileURL 约 2 小时，留 30 分钟余量）
+const CACHE_TTL = 90 * 60 * 1000
 
-/** 通过云函数 getAudioUrl 获取音频临时播放链接 */
-async function resolveAudioSrc(key: string): Promise<string | null> {
-  const cached = tempUrlCache.get(key)
-  if (cached) return cached
+interface CacheEntry {
+  [key: string]: { url: string; at: number }
+}
 
+// 内存缓存（本次会话内最快）
+const memoryCache = new Map<string, string>()
+
+function loadCache(): CacheEntry {
+  try {
+    const saved = Taro.getStorageSync(CACHE_STORAGE_KEY)
+    if (saved && typeof saved === 'object') return saved as CacheEntry
+  } catch (err) {
+    // 忽略
+  }
+  return {}
+}
+
+function saveCache(cache: CacheEntry): void {
+  try {
+    Taro.setStorageSync(CACHE_STORAGE_KEY, cache)
+  } catch (err) {
+    // 忽略
+  }
+}
+
+/** 从本地缓存取链接（内存 → 本地存储），命中且未过期则返回 */
+function getCachedUrl(key: string): string | null {
+  const mem = memoryCache.get(key)
+  if (mem) return mem
+
+  const cache = loadCache()
+  const entry = cache[key]
+  if (entry && entry.url && Date.now() - entry.at < CACHE_TTL) {
+    memoryCache.set(key, entry.url)
+    return entry.url
+  }
+  return null
+}
+
+/** 写入缓存（内存 + 本地存储） */
+function setCachedUrl(key: string, url: string): void {
+  memoryCache.set(key, url)
+  const cache = loadCache()
+  cache[key] = { url, at: Date.now() }
+  saveCache(cache)
+}
+
+/** 通过云函数批量获取音频临时链接，并写入缓存 */
+async function fetchUrls(keys: string[]): Promise<Record<string, string>> {
   try {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const res: any = await Taro.cloud.callFunction({
       name: 'getAudioUrl',
-      data: { keys: [key] }
+      data: { keys }
     })
-    const urls = res?.result?.urls
-    if (urls && urls[key]) {
-      tempUrlCache.set(key, urls[key])
-      return urls[key]
+    const urls: Record<string, string> = res?.result?.urls ?? {}
+    for (const k of Object.keys(urls)) {
+      setCachedUrl(k, urls[k])
     }
-    console.warn('[speech] 云函数未返回该音频链接', key)
-    return null
+    return urls
   } catch (err) {
-    console.warn('[speech] 云函数调用异常', key, err)
-    return null
+    console.warn('[speech] 云函数调用异常', keys, err)
+    return {}
   }
+}
+
+/** 解析单个词的播放链接（优先缓存，未命中则调云函数） */
+async function resolveAudioSrc(key: string): Promise<string | null> {
+  const cached = getCachedUrl(key)
+  if (cached) return cached
+  const urls = await fetchUrls([key])
+  return urls[key] ?? null
+}
+
+/**
+ * 预取一批词的播放链接（后台静默，不阻塞）。
+ * 在题目渲染时调用，点击发音时即可命中缓存，秒播。
+ */
+export function prefetchAudio(texts: string[]): void {
+  const keys = texts
+    .map((t) => sanitizeKey(normalizeSpeakText(t)))
+    .filter((k) => k && !getCachedUrl(k))
+  if (keys.length === 0) return
+  // 去重
+  const unique = Array.from(new Set(keys))
+  fetchUrls(unique).catch(() => {
+    /* 预取失败不影响，点击时仍会单独再取 */
+  })
 }
 
 /** 播放英文发音；无对应音频时静默忽略 */
@@ -82,6 +152,13 @@ export function speak(text: string): void {
     } catch (err) {
       console.warn('[speech] 播放异常', err)
     }
+  }
+
+  // 命中缓存直接播（不 await，同步快）
+  const cached = getCachedUrl(key)
+  if (cached) {
+    play(cached)
+    return
   }
 
   resolveAudioSrc(key).then((src) => {

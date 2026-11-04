@@ -3,7 +3,7 @@ import Taro, { useRouter } from '@tarojs/taro'
 import { View, Text } from '@tarojs/components'
 import { findLesson, type Question } from '../../data/course'
 import { advance, enqueueWrong } from './queue'
-import { speak } from '../../services/speech'
+import { speak, prefetchAudio } from '../../services/speech'
 import { useApp, HEART_EXCHANGE_COST } from '../../store/app-store'
 import './index.scss'
 
@@ -67,6 +67,18 @@ export default function Lesson() {
     100,
     Math.round((answered / (lesson.questions.length + extraCount)) * 100)
   )
+
+  // 当前题出现时，预取所有英文词的发音链接，点击即秒播
+  useEffect(() => {
+    if (!question) return
+    const texts: string[] = []
+    if (question.type === 'choice') {
+      texts.push(...(question as Extract<Question, { type: 'choice' }>).options)
+    } else {
+      texts.push(...(question as Extract<Question, { type: 'translate' }>).bank)
+    }
+    prefetchAudio(texts)
+  }, [question])
 
   const restart = () => {
     // 重新闯关：不清空/不恢复红心（由外部红心状态决定能否开始）
