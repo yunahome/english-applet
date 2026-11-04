@@ -101,6 +101,8 @@ const AppContext = createContext<AppContextValue | null>(null)
 export function AppProvider({ children }: { children: ReactNode }) {
   const [state, setState] = useState<AppState>(loadState)
   const uploadTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+  // 启动锁：云端拉取完成前禁止上传，防止「空状态覆盖云端进度」竞态
+  const bootedRef = useRef(false)
 
   // 状态变化即持久化 + 云端节流同步
   useEffect(() => {
@@ -109,6 +111,8 @@ export function AppProvider({ children }: { children: ReactNode }) {
     } catch (err) {
       // 忽略持久化错误
     }
+    // 冷启动拉取完成前不上传（防止空/旧本地状态覆盖云端新进度）
+    if (!bootedRef.current) return
     // 节流上传：云同步（若已启用），每 3 秒最多一次
     if (uploadTimer.current === null) {
       uploadTimer.current = setTimeout(() => {
@@ -122,14 +126,46 @@ export function AppProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const boot = async () => {
       const ready = initCloud()
-      if (!ready) return
-      const remote = await downloadProgress()
-      if (remote && typeof remote === 'object') {
-        const r = remote as Partial<AppState>
-        // 仅当云端有关键字段时才覆盖本地
-        if ('hearts' in r || 'xp' in r || 'completed' in r) {
-          setState((prev) => ({ ...prev, ...r }))
+      if (!ready) {
+        // 云不可用也要放行上传（纯本地模式）
+        bootedRef.current = true
+        return
+      }
+      try {
+        const remote = await downloadProgress()
+        if (remote && typeof remote === 'object') {
+          const r = remote as Partial<AppState>
+          // 仅当云端有关键字段且进度非空时才覆盖本地
+          const hasProgress =
+            ('hearts' in r && typeof r.hearts === 'number') ||
+            ('xp' in r && typeof r.xp === 'number' && (r.xp ?? 0) > 0) ||
+            ('completed' in r && r.completed && Object.keys(r.completed).length > 0)
+          if (hasProgress) {
+            setState((prev) => {
+              // 合并策略：取本地与云端中「进度更大」的一方，避免任一端被清空
+              const remoteCompleted = r.completed ?? {}
+              const localCompleted = prev.completed
+              const mergedCompleted = { ...localCompleted, ...remoteCompleted }
+              return {
+                ...prev,
+                hearts: Math.max(prev.hearts, r.hearts ?? 0),
+                xp: Math.max(prev.xp, r.xp ?? 0),
+                streak: Math.max(prev.streak, r.streak ?? 0),
+                // 学习日期取较新的一方（防回退）
+                lastStudyDate:
+                  (r.lastStudyDate ?? '') >= (prev.lastStudyDate ?? '')
+                    ? (r.lastStudyDate ?? prev.lastStudyDate)
+                    : prev.lastStudyDate,
+                completed: mergedCompleted
+              }
+            })
+          }
         }
+      } catch (err) {
+        // 拉取失败不影响本地使用
+      } finally {
+        // 无论成功失败，拉取结束后放行上传
+        bootedRef.current = true
       }
     }
     boot()
