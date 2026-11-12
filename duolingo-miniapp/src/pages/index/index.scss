@@ -246,8 +246,40 @@
   margin-bottom: $s-1;
 }
 
-/* 蓝色旗帜缎带（主幅 + 两侧折角燕尾） */
+/* 蓝色旗帜缎带：容器（含燕尾）+ 主幅子元素（保证燕尾在主幅下层） */
 .ribbon {
+  position: relative;
+  display: inline-block;
+}
+
+/* 左侧燕尾 */
+.ribbon::before {
+  content: '';
+  position: absolute;
+  left: -16px;
+  top: 7px;
+  width: 36px;
+  height: 78%;
+  background: #2E86C8;
+  clip-path: polygon(0 0, 100% 0, 55% 50%, 100% 100%, 0 100%);
+  border-radius: $r-xs 0 0 $r-xs;
+}
+
+/* 右侧燕尾 */
+.ribbon::after {
+  content: '';
+  position: absolute;
+  right: -16px;
+  top: 7px;
+  width: 36px;
+  height: 78%;
+  background: #2E86C8;
+  clip-path: polygon(0 0, 100% 0, 45% 50%, 0 100%);
+  border-radius: 0 $r-xs $r-xs 0;
+}
+
+/* 主幅（盖在燕尾上方） */
+.ribbon-main {
   background: linear-gradient(135deg, #54B1F2, $c-blue);
   border-radius: $r-pill;
   padding: 10px 30px 10px 52px;
@@ -257,43 +289,14 @@
   position: relative;
 }
 
-/* 左侧燕尾（折角在缎带下层，向下错位） */
-.ribbon::before {
-  content: '';
-  position: absolute;
-  left: -14px;
-  top: 6px;
-  width: 34px;
-  height: 80%;
-  background: #2E86C8;
-  clip-path: polygon(0 0, 100% 0, 55% 50%, 100% 100%, 0 100%);
-  border-radius: $r-xs 0 0 $r-xs;
-  z-index: -1;
-}
-
-/* 右侧燕尾 */
-.ribbon::after {
-  content: '';
-  position: absolute;
-  right: -14px;
-  top: 6px;
-  width: 34px;
-  height: 80%;
-  background: #2E86C8;
-  clip-path: polygon(0 0, 100% 0, 45% 50%, 0 100%, 0 100%);
-  border-radius: 0 $r-xs $r-xs 0;
-  z-index: -1;
-}
-
-/* 橙黄图钉（骑在缎带左端） */
+/* 橙黄图钉（骑在主幅左端） */
 .ribbon-pin {
   position: absolute;
-  left: 18px;
+  left: 14px;
   top: 50%;
-  width: 34px;
-  height: 34px;
+  width: 36px;
+  height: 36px;
   transform: translateY(-50%);
-  z-index: 1;
 }
 
 // 图钉主体（橙黄水滴形）
@@ -302,8 +305,8 @@
   position: absolute;
   left: 4px;
   top: 3px;
-  width: 26px;
-  height: 26px;
+  width: 27px;
+  height: 27px;
   background: #FFB800;
   border-radius: 50% 50% 50% 0;
   transform: rotate(-45deg);
@@ -314,10 +317,10 @@
 .ribbon-pin::before {
   content: '';
   position: absolute;
-  left: 13px;
-  top: 8px;
-  width: 8px;
-  height: 8px;
+  left: 14px;
+  top: 9px;
+  width: 9px;
+  height: 9px;
   background: $c-surface;
   border-radius: 50%;
   z-index: 1;
