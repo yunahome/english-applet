@@ -19,8 +19,8 @@
 .home-content {
   position: relative;
   z-index: 1;
-  // 自定义导航：内容避开状态栏 + 胶囊按钮区域
-  padding: calc(env(safe-area-inset-top) + 90px) $s-5 60px;
+  // 自定义导航：内容避开状态栏 + 胶囊按钮区域（整体下移）
+  padding: calc(env(safe-area-inset-top) + 150px) $s-5 60px;
 }
 
 /* ===== 顶部：吉祥物 + 气泡 + 右侧连击/设置 ===== */
@@ -135,9 +135,9 @@
 /* ===== 今日目标卡片（轻微压住吉祥物底部） ===== */
 .goal-card {
   background: $c-surface;
-  border-radius: $r-xl;
-  padding: $s-4 $s-6;
-  margin-top: -28px;
+  border-radius: 36px;
+  padding: $s-4 $s-7;
+  margin: -28px 12px 0;
   display: flex;
   align-items: center;
   box-shadow: 0 6px 0 rgba(0, 0, 0, 0.1);
@@ -246,38 +246,81 @@
   margin-bottom: $s-1;
 }
 
-/* 蓝色缎带横幅 */
+/* 蓝色旗帜缎带（主幅 + 两侧折角燕尾） */
 .ribbon {
   background: linear-gradient(135deg, #54B1F2, $c-blue);
   border-radius: $r-pill;
-  padding: 8px 26px 8px 10px;
+  padding: 10px 30px 10px 52px;
   display: flex;
   align-items: center;
-  gap: 10px;
   box-shadow: 0 4px 0 #2E86C8;
   position: relative;
 }
 
-.ribbon-pin {
-  font-size: 22px;
-  width: 36px;
-  height: 36px;
+/* 左侧燕尾（折角在缎带下层，向下错位） */
+.ribbon::before {
+  content: '';
+  position: absolute;
+  left: -14px;
+  top: 6px;
+  width: 34px;
+  height: 80%;
   background: #2E86C8;
-  border-radius: 50%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
+  clip-path: polygon(0 0, 100% 0, 55% 50%, 100% 100%, 0 100%);
+  border-radius: $r-xs 0 0 $r-xs;
+  z-index: -1;
 }
 
-// 白色图钉（CSS 绘制：圆头 + 尖角，替代红色 emoji）
+/* 右侧燕尾 */
+.ribbon::after {
+  content: '';
+  position: absolute;
+  right: -14px;
+  top: 6px;
+  width: 34px;
+  height: 80%;
+  background: #2E86C8;
+  clip-path: polygon(0 0, 100% 0, 45% 50%, 0 100%, 0 100%);
+  border-radius: 0 $r-xs $r-xs 0;
+  z-index: -1;
+}
+
+/* 橙黄图钉（骑在缎带左端） */
+.ribbon-pin {
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  width: 34px;
+  height: 34px;
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+// 图钉主体（橙黄水滴形）
 .ribbon-pin::after {
   content: '';
-  width: 16px;
-  height: 16px;
-  background: $c-surface;
+  position: absolute;
+  left: 4px;
+  top: 3px;
+  width: 26px;
+  height: 26px;
+  background: #FFB800;
   border-radius: 50% 50% 50% 0;
-  transform: rotate(-45deg) translate(1px, -1px);
+  transform: rotate(-45deg);
+  box-shadow: 0 2px 0 rgba(0, 0, 0, 0.12);
+}
+
+// 图钉中心白点
+.ribbon-pin::before {
+  content: '';
+  position: absolute;
+  left: 13px;
+  top: 8px;
+  width: 8px;
+  height: 8px;
+  background: $c-surface;
+  border-radius: 50%;
+  z-index: 1;
 }
 
 .ribbon-title {
