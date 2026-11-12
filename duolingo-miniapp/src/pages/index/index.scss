@@ -132,12 +132,12 @@
   font-size: $fs-lg;
 }
 
-/* ===== 今日目标卡片（压在吉祥物上层） ===== */
+/* ===== 今日目标卡片（轻微压住吉祥物底部） ===== */
 .goal-card {
   background: $c-surface;
   border-radius: $r-xl;
-  padding: $s-3 $s-6;
-  margin-top: -60px;
+  padding: $s-4 $s-6;
+  margin-top: -28px;
   display: flex;
   align-items: center;
   box-shadow: 0 6px 0 rgba(0, 0, 0, 0.1);
@@ -150,8 +150,8 @@
 }
 
 .goal-ring {
-  width: 140px;
-  height: 140px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   background: conic-gradient($c-green 0deg, #7FE21A 240deg, #E8F0E4 240deg 360deg);
   display: flex;
@@ -160,32 +160,36 @@
 }
 
 .goal-ring-inner {
-  width: 108px;
-  height: 108px;
+  width: 118px;
+  height: 118px;
   background: $c-surface;
   border-radius: 50%;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  overflow: hidden;
 }
 
 .goal-flame {
-  font-size: $fs-xl;
-  line-height: 1;
+  font-size: 32px;
+  line-height: 1.1;
+  margin-top: -6px;
 }
 
 .goal-streak-num {
-  font-size: $fs-xl;
+  font-size: 36px;
   font-weight: $fw-black;
   color: $c-text;
   line-height: 1.1;
 }
 
 .goal-streak-label {
-  font-size: $fs-xs;
+  font-size: 18px;
   color: $c-text-sub;
   font-weight: $fw-semibold;
+  white-space: nowrap;
+  line-height: 1.2;
 }
 
 .goal-right {
@@ -244,29 +248,40 @@
 
 /* 蓝色缎带横幅 */
 .ribbon {
-  background: linear-gradient(135deg, #4A9FE8, $c-blue);
+  background: linear-gradient(135deg, #54B1F2, $c-blue);
   border-radius: $r-pill;
-  padding: $s-1 $s-6 $s-1 $s-4;
+  padding: 8px 26px 8px 10px;
   display: flex;
   align-items: center;
-  gap: $s-1;
-  box-shadow: 0 5px 0 #2E86C8;
+  gap: 10px;
+  box-shadow: 0 4px 0 #2E86C8;
   position: relative;
 }
 
 .ribbon-pin {
-  font-size: 24px;
-  width: 40px;
-  height: 40px;
+  font-size: 22px;
+  width: 36px;
+  height: 36px;
   background: #2E86C8;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+}
+
+// 白色图钉（CSS 绘制：圆头 + 尖角，替代红色 emoji）
+.ribbon-pin::after {
+  content: '';
+  width: 16px;
+  height: 16px;
+  background: $c-surface;
+  border-radius: 50% 50% 50% 0;
+  transform: rotate(-45deg) translate(1px, -1px);
 }
 
 .ribbon-title {
-  font-size: $fs-md;
+  font-size: 26px;
   font-weight: $fw-black;
   color: $c-surface;
   letter-spacing: 0.5px;
@@ -277,9 +292,9 @@
 }
 
 .unit-count {
-  font-size: $fs-md;
+  font-size: $fs-lg;
   font-weight: $fw-black;
-  color: $c-blue;
+  color: #2B70C9;
 }
 
 /* ===== 之字形关卡路径 ===== */
@@ -321,11 +336,19 @@
   &.left {
     margin-right: auto;
     margin-left: 2%;
+
+    .node-card {
+      transform: rotate(-3deg); // 左列卡片向左倾斜
+    }
   }
 
   &.right {
     margin-left: auto;
     margin-right: 2%;
+
+    .node-card {
+      transform: rotate(3deg); // 右列卡片向右倾斜
+    }
   }
 
   // 锁定关卡：卡片不透明，插图去色即可
