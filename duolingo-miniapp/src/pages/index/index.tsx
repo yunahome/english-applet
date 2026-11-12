@@ -129,46 +129,52 @@ export default function Index() {
                 </Text>
               </View>
 
-              {/* 之字形关卡路径 */}
+              {/* 之字形关卡路径（弯曲虚线连接） */}
               <View className='path'>
-                <View className='path-dashed' />
                 {unit.lessons.map((lesson, idx) => {
                   const lessonUnlocked = isLessonUnlocked(unit.id, idx)
                   const lessonDone = !!state.completed[lesson.id]
                   const hasQuestions = lesson.questions.length > 0
                   const img = LESSON_IMGS[idx % LESSON_IMGS.length]
                   const side = idx % 2 === 0 ? 'left' : 'right'
+                  // 当前节点的连接线方向：left 节点之后向右弯，right 节点之后向左弯
+                  const connector = side === 'left' ? 'c-lr' : 'c-rl'
                   return (
-                    <View
-                      key={lesson.id}
-                      className={`path-node ${side} ${lessonUnlocked ? '' : 'locked'} ${
-                        lessonDone ? 'done' : ''
-                      }`}
-                      onClick={
-                        lessonUnlocked
-                          ? () => goLesson(unit.id, lesson.id, hasQuestions)
-                          : undefined
-                      }
-                    >
-                      <View className='node-card'>
-                        <Image className='node-img' src={img} mode='aspectFill' />
-                        <View className='node-meta'>
-                          <Text className='node-star'>⭐</Text>
-                          <Text className='node-count'>
-                            {lessonDone ? 3 : 0}/3
-                          </Text>
+                    <View key={lesson.id}>
+                      <View
+                        className={`path-node ${side} ${lessonUnlocked ? '' : 'locked'} ${
+                          lessonDone ? 'done' : ''
+                        }`}
+                        onClick={
+                          lessonUnlocked
+                            ? () => goLesson(unit.id, lesson.id, hasQuestions)
+                            : undefined
+                        }
+                      >
+                        <View className='node-card'>
+                          <Image className='node-img' src={img} mode='aspectFill' />
+                          <View className='node-meta'>
+                            <Text className='node-star'>⭐</Text>
+                            <Text className='node-count'>
+                              {lessonDone ? 3 : 0}/3
+                            </Text>
+                          </View>
                         </View>
+                        {/* 角标：已完成 ✓ / 未解锁 🔒 */}
+                        {lessonDone && (
+                          <View className='node-badge done-badge'>
+                            <Text className='badge-check'>✓</Text>
+                          </View>
+                        )}
+                        {!lessonUnlocked && (
+                          <View className='node-badge lock-badge'>
+                            <Text className='badge-lock'>🔒</Text>
+                          </View>
+                        )}
                       </View>
-                      {/* 角标：已完成 ✓ / 未解锁 🔒 */}
-                      {lessonDone && (
-                        <View className='node-badge done-badge'>
-                          <Text className='badge-check'>✓</Text>
-                        </View>
-                      )}
-                      {!lessonUnlocked && (
-                        <View className='node-badge lock-badge'>
-                          <Text className='badge-lock'>🔒</Text>
-                        </View>
+                      {/* 节点之间的弯曲虚线 */}
+                      {idx < unit.lessons.length - 1 && (
+                        <View className={`path-connector ${connector}`} />
                       )}
                     </View>
                   )

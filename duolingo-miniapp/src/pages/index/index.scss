@@ -19,7 +19,8 @@
 .home-content {
   position: relative;
   z-index: 1;
-  padding: $s-3 $s-5 60px;
+  // 自定义导航：内容避开状态栏 + 胶囊按钮区域
+  padding: calc(env(safe-area-inset-top) + 90px) $s-5 60px;
 }
 
 /* ===== 顶部：吉祥物 + 气泡 + 右侧连击/设置 ===== */
@@ -29,11 +30,13 @@
 }
 
 .mascot {
-  width: 190px;
-  height: 190px;
+  width: 250px;
+  height: 227px;
   margin-left: -16px;
-  margin-top: -10px;
+  margin-top: -30px;
   flex-shrink: 0;
+  position: relative;
+  z-index: 1; // 在 goal-card 之下，底部被卡片压住
 }
 
 .bubble {
@@ -129,15 +132,17 @@
   font-size: $fs-lg;
 }
 
-/* ===== 今日目标卡片 ===== */
+/* ===== 今日目标卡片（压在吉祥物上层） ===== */
 .goal-card {
   background: $c-surface;
   border-radius: $r-xl;
   padding: $s-3 $s-6;
-  margin-top: -20px;
+  margin-top: -60px;
   display: flex;
   align-items: center;
   box-shadow: 0 6px 0 rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 2;
 }
 
 .goal-ring-wrap {
@@ -250,7 +255,14 @@
 }
 
 .ribbon-pin {
-  font-size: $fs-md;
+  font-size: 24px;
+  width: 40px;
+  height: 40px;
+  background: #2E86C8;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .ribbon-title {
@@ -267,7 +279,7 @@
 .unit-count {
   font-size: $fs-md;
   font-weight: $fw-black;
-  color: $c-text;
+  color: $c-blue;
 }
 
 /* ===== 之字形关卡路径 ===== */
@@ -276,22 +288,35 @@
   padding: $s-3 0;
 }
 
-/* 中间虚线路径 */
-.path-dashed {
-  position: absolute;
-  left: 50%;
-  top: 40px;
-  bottom: 40px;
-  width: 0;
-  border-left: 6px dashed rgba(255, 255, 255, 0.9);
-  transform: translateX(-50%);
+/* 节点之间的弯曲虚线（S 形走向） */
+.path-connector {
+  height: 80px;
+  z-index: 0;
+
+  // 左节点 → 右节点：右上角圆弧
+  &.c-lr {
+    margin-left: 25%;
+    width: 50%;
+    border-top: 6px dashed rgba(255, 255, 255, 0.95);
+    border-right: 6px dashed rgba(255, 255, 255, 0.95);
+    border-top-right-radius: 90px;
+  }
+
+  // 右节点 → 左节点：左上角圆弧
+  &.c-rl {
+    margin-left: 25%;
+    width: 50%;
+    border-top: 6px dashed rgba(255, 255, 255, 0.95);
+    border-left: 6px dashed rgba(255, 255, 255, 0.95);
+    border-top-left-radius: 90px;
+  }
 }
 
 .path-node {
   position: relative;
   width: 46%;
   z-index: 1;
-  margin-bottom: 40px;
+  margin-bottom: 0;
 
   &.left {
     margin-right: auto;
@@ -303,8 +328,17 @@
     margin-right: 2%;
   }
 
+  // 锁定关卡：卡片不透明，插图去色即可
   &.locked {
-    opacity: 0.75;
+    opacity: 1;
+
+    .node-card {
+      background: $c-surface;
+    }
+
+    .node-img {
+      filter: grayscale(1);
+    }
   }
 }
 
