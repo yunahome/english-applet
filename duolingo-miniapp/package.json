@@ -10,9 +10,10 @@
   },
   "scripts": {
     "build:course": "node scripts/build_course.cjs",
-    "build:weapp": "taro build --type weapp",
-    "build:tt": "taro build --type tt",
-    "build:h5": "taro build --type h5",
+    "clean": "rm -rf dist",
+    "build:weapp": "rm -rf dist/weapp && taro build --type weapp",
+    "build:tt": "rm -rf dist/tt && taro build --type tt",
+    "build:h5": "rm -rf dist/h5 && taro build --type h5",
     "dev:weapp": "npm run build:weapp -- --watch",
     "dev:tt": "npm run build:tt -- --watch",
     "dev:h5": "npm run build:h5 -- --watch"

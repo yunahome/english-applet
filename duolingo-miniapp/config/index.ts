@@ -4,6 +4,14 @@ import devConfig from './dev'
 import prodConfig from './prod'
 
 export default defineConfig(async (merge) => {
+  // 按目标平台分目录输出，避免微信端与抖音端产物互相覆盖
+  const taroEnv = process.env.TARO_ENV || 'weapp'
+  const outputRootMap: Record<string, string> = {
+    weapp: 'dist/weapp',
+    tt: 'dist/tt',
+    h5: 'dist/h5'
+  }
+
   const baseConfig = {
     projectName: 'duolingo-miniapp',
     date: '2026-10-27',
@@ -15,7 +23,7 @@ export default defineConfig(async (merge) => {
       828: 1.81 / 2
     },
     sourceRoot: 'src',
-    outputRoot: 'dist',
+    outputRoot: outputRootMap[taroEnv] || 'dist',
     plugins: [],
     defineConstants: {},
     copy: {

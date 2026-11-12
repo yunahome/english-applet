@@ -1,0 +1,118 @@
+/* ============================================================
+   Duo英语 · Design Tokens（扁平卡通风格）
+   说明：本文件只存放变量与 mixin，不产生实际样式。
+   - 尺寸仍以 px 书写，由 Taro designWidth=750 编译为 rpx，微信/抖音两端一致
+   - 色彩延续原有多邻国色系，仅做归一化，不更换主色
+   ============================================================ */
+
+/* ---------- 主色（沿用现有配色） ---------- */
+$c-green: #58CC02;        // 主色 · 品牌绿
+$c-green-dark: #4A9F02;   // 主色描边 / 按压
+$c-green-deep: #58A700;   // 主色深字
+$c-green-soft: #D7FFB8;   // 主色浅底
+$c-green-bg: #EAF7E0;     // 主色页面底色
+
+$c-blue: #1CB0F6;         // 辅助蓝
+$c-blue-dark: #1899D6;
+$c-blue-soft: #DDF4FF;
+$c-blue-bg: #E4F3FD;
+
+$c-yellow: #FFC800;       // XP / 奖励
+$c-yellow-dark: #E6A800;
+$c-yellow-soft: #FFFBEB;
+$c-yellow-bg: #FFF4D6;
+$c-yellow-deep: #B97D0B;  // 深黄文字（提示条）
+
+$c-orange: #FF9600;       // 连续打卡
+$c-red: #FF4B4B;          // 红心 / 错误 / 危险
+$c-red-dark: #D93636;
+$c-red-soft: #FFDFE0;
+$c-purple: #CE82FF;       // 单元色
+$c-navy: #2B70C9;         // 单元色
+$c-teal: #4CB786;         // 单元色
+
+/* ---------- 中性色 ---------- */
+$c-text: #3C3C3C;         // 主文字
+$c-text-sub: #AFB3B5;     // 次要文字
+$c-text-mute: #CFCFCF;    // 提示 / 占位
+$c-border: #E5E5E5;       // 常规描边
+$c-border-strong: #D8D8D8; // 强描边 / 虚线
+$c-surface: #FFFFFF;      // 卡片面
+$c-bg: #F7F7F7;           // 页面底色
+$c-bg-soft: #FAFAFA;      // 凹陷区 / 输入区
+$c-overlay: rgba(0, 0, 0, 0.5);
+
+/* ---------- 圆角 ---------- */
+$r-xs: 12px;
+$r-sm: 16px;
+$r-md: 20px;
+$r-lg: 24px;
+$r-xl: 28px;
+$r-2xl: 32px;
+$r-pill: 999px;
+
+/* ---------- 间距 ---------- */
+$s-1: 8px;
+$s-2: 12px;
+$s-3: 16px;
+$s-4: 20px;
+$s-5: 24px;
+$s-6: 28px;
+$s-7: 32px;
+$s-8: 40px;
+$s-9: 56px;
+
+/* ---------- 描边 ---------- */
+$bw-thin: 2px;            // 细分隔线
+$bw: 3px;                 // 常规卡通描边
+$bw-thick: 4px;           // 强调描边 / 选中态
+
+/* ---------- 字号 ---------- */
+$fs-xs: 22px;
+$fs-sm: 24px;
+$fs-md: 26px;
+$fs-lg: 30px;
+$fs-xl: 34px;
+$fs-2xl: 38px;
+$fs-3xl: 46px;
+$fs-4xl: 40px;
+$fs-display: 56px;
+
+/* ---------- 字重 ---------- */
+$fw-medium: 600;
+$fw-semibold: 700;
+$fw-bold: 800;
+$fw-black: 900;
+
+/* ---------- 复用 mixin ---------- */
+
+/* 扁平卡片：纯色面 + 大圆角 + 粗描边，无投影 */
+@mixin flat-card($bg: $c-surface, $radius: $r-xl, $border: $c-border, $width: $bw) {
+  background: $bg;
+  border: $width solid $border;
+  border-radius: $radius;
+}
+
+/* 卡通按压反馈：仅位移，不叠加阴影 */
+@mixin press-feedback($distance: 2px) {
+  transition: transform 0.1s;
+
+  &:active {
+    transform: translateY($distance);
+  }
+}
+
+/* 扁平实心按钮：纯色块 + 深一档描边 + 下压反馈 */
+@mixin flat-btn($bg, $border, $radius: $r-md) {
+  background: $bg;
+  border: $bw solid $border;
+  border-radius: $radius;
+  @include press-feedback;
+}
+
+/* 扁平标签 / 胶囊 */
+@mixin pill($bg, $fg, $radius: $r-pill) {
+  background: $bg;
+  color: $fg;
+  border-radius: $radius;
+}

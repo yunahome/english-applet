@@ -1,78 +1,90 @@
 /* 答题闯关页 · 扁平卡通风格 */
+@use '../../styles/tokens' as *;
+
 .lesson {
   min-height: 100vh;
-  background: #fff;
+  background: $c-bg;
   display: flex;
   flex-direction: column;
 }
 
 .lesson-missing {
-  padding: 100px 40px;
+  padding: 100px $s-8;
   text-align: center;
-  color: #AFB3B5;
+  color: $c-text-sub;
 }
 
 /* ===== 顶部：退出 + 进度条 + 红心 ===== */
 .lesson-header {
   display: flex;
   align-items: center;
-  padding: 28px 28px 12px;
+  padding: $s-6 $s-6 $s-2;
 }
 
 .lesson-close {
-  font-size: 36px;
-  color: #AFB3B5;
-  padding: 0 20px 0 0;
+  flex-shrink: 0;
+  width: 60px;
+  height: 60px;
+  line-height: 54px;
+  text-align: center;
+  font-size: $fs-lg;
+  color: $c-text-sub;
+  background: $c-surface;
+  border: $bw solid $c-border;
+  border-radius: 50%;
+  margin-right: $s-3;
+  @include press-feedback;
 }
 
 .progress-track {
   flex: 1;
   height: 28px;
-  background: #E5E5E5;
-  border-radius: 14px;
+  background: $c-surface;
+  border: $bw solid $c-border;
+  border-radius: $r-pill;
   overflow: hidden;
 }
 
 .progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, #58CC02, #7FE21A);
-  border-radius: 14px;
+  background: $c-green;
+  border-radius: $r-pill;
   transition: width 0.3s;
 }
 
 .lesson-hearts {
-  font-size: 30px;
-  padding-left: 20px;
-  color: #FF4B4B;
-  font-weight: 900;
+  font-size: $fs-lg;
+  padding-left: $s-4;
+  color: $c-red;
+  font-weight: $fw-black;
 }
 
 .repractice-banner {
-  margin: 8px 28px 0;
-  background: #FFF4D6;
-  border-radius: 16px;
-  padding: 14px 24px;
-  box-shadow: 0 4px 0 #F0DCB0;
+  margin: $s-1 $s-6 0;
+  background: $c-yellow-bg;
+  border: $bw solid $c-yellow;
+  border-radius: $r-sm;
+  padding: 14px $s-4;
 }
 
 .repractice-text {
-  color: #B97D0B;
-  font-size: 24px;
-  font-weight: 700;
+  color: $c-yellow-deep;
+  font-size: $fs-sm;
+  font-weight: $fw-semibold;
 }
 
 /* ===== 题目区 ===== */
 .lesson-body {
   flex: 1;
-  padding: 40px 32px 220px;
+  padding: $s-8 $s-7 220px;
 }
 
 .lesson-question {
   display: block;
-  font-size: 38px;
-  font-weight: 900;
-  color: #3C3C3C;
-  margin-bottom: 40px;
+  font-size: $fs-2xl;
+  font-weight: $fw-black;
+  color: $c-text;
+  margin-bottom: $s-8;
   line-height: 1.5;
 }
 
@@ -80,133 +92,116 @@
 .options {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
+  gap: $s-4;
 }
 
 .option {
+  @include flat-card($c-surface, $r-md, $c-border);
   width: calc(50% - 10px);
-  border: 3px solid #E5E5E5;
-  border-bottom-width: 6px;
-  border-radius: 20px;
-  padding: 36px 24px;
+  padding: 36px $s-5;
   text-align: center;
   font-size: 32px;
-  color: #3C3C3C;
-  background: #fff;
-  transition: transform 0.1s;
-
-  &:active {
-    transform: translateY(2px);
-    border-bottom-width: 4px;
-  }
+  color: $c-text;
+  @include press-feedback;
 
   &.active {
-    border-color: #84D8FF;
-    background: #DDF4FF;
-    box-shadow: 0 4px 0 #1899D6;
+    border-color: $c-blue;
+    border-width: $bw-thick;
+    background: $c-blue-soft;
   }
 
   &.right {
-    border-color: #58CC02;
-    background: #D7FFB8;
-    box-shadow: 0 4px 0 #58A700;
+    border-color: $c-green-dark;
+    border-width: $bw-thick;
+    background: $c-green-soft;
   }
 }
 
 /* 组句题 */
 .answer-zone {
   min-height: 200px;
-  border: 3px dashed #D8D8D8;
-  border-radius: 20px;
-  padding: 24px;
+  border: $bw dashed $c-border-strong;
+  border-radius: $r-md;
+  padding: $s-5;
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: $s-3;
   align-content: flex-start;
-  background: #FAFAFA;
+  background: $c-bg-soft;
 }
 
 .answer-zone-tip {
-  color: #CFCFCF;
-  font-size: 28px;
+  color: $c-text-mute;
+  font-size: $fs-md;
 }
 
 .divider {
-  height: 3px;
-  background: #F0F0F0;
-  margin: 32px 0;
-  border-radius: 2px;
+  height: $bw-thin;
+  background: $c-border;
+  margin: $s-7 0;
+  border-radius: $bw-thin;
 }
 
 .bank {
   display: flex;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: $s-3;
 }
 
 .word {
-  background: #fff;
-  border: 3px solid #E5E5E5;
-  border-bottom-width: 6px;
-  border-radius: 16px;
-  padding: 20px 28px;
-  font-size: 30px;
-  color: #3C3C3C;
-  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.06);
-  transition: transform 0.1s;
-
-  &:active {
-    transform: translateY(2px);
-    border-bottom-width: 4px;
-  }
+  @include flat-card($c-surface, $r-sm, $c-border);
+  padding: $s-4 $s-6;
+  font-size: $fs-lg;
+  color: $c-text;
+  @include press-feedback;
 
   &.used {
     opacity: 0.35;
   }
 }
 
-/* ===== 底部按钮区 ===== */
+/* ===== 底部按钮区：纯色块 + 顶部描边 ===== */
 .lesson-footer {
   position: fixed;
   left: 0;
   right: 0;
   bottom: 0;
-  padding: 28px 32px calc(28px + env(safe-area-inset-bottom));
+  background: $c-bg;
+  border-top: $bw solid $c-border;
+  padding: $s-6 $s-7 calc($s-6 + env(safe-area-inset-bottom));
 
   &.footer-correct {
-    background: #D7FFB8;
+    background: $c-green-soft;
+    border-top-color: $c-green;
   }
 
   &.footer-wrong {
-    background: #FFDFE0;
+    background: $c-red-soft;
+    border-top-color: $c-red;
   }
 }
 
 .check-btn {
-  background: linear-gradient(135deg, #58CC02, #6FDD1A);
-  border-radius: 22px;
-  padding: 30px 0;
+  @include flat-btn($c-green, $c-green-dark, $r-md);
+  padding: $s-6 0;
   text-align: center;
-  box-shadow: 0 6px 0 #4A9F02;
-  transition: transform 0.1s;
-
-  &:active {
-    transform: translateY(3px);
-    box-shadow: 0 3px 0 #4A9F02;
-  }
 
   &.disabled {
-    background: #E5E5E5;
-    box-shadow: none;
+    background: $c-border;
+    border-color: $c-border-strong;
+    transform: none;
   }
 }
 
 .check-btn-text {
-  color: #fff;
-  font-size: 34px;
-  font-weight: 900;
+  color: $c-surface;
+  font-size: $fs-xl;
+  font-weight: $fw-black;
   letter-spacing: 2px;
-  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.08);
+
+  .disabled & {
+    color: $c-text-sub;
+  }
 }
 
 .feedback {
@@ -217,42 +212,34 @@
 
 .feedback-title {
   display: block;
-  font-size: 36px;
-  font-weight: 900;
+  font-size: $fs-2xl;
+  font-weight: $fw-black;
 }
 
 .feedback-answer {
   display: block;
-  font-size: 28px;
-  margin-top: 8px;
+  font-size: $fs-md;
+  margin-top: $s-1;
 }
 
 .feedback-text.correct .feedback-title {
-  color: #58A700;
+  color: $c-green-deep;
 }
 
 .feedback-text.wrong .feedback-title,
 .feedback-text.wrong .feedback-answer {
-  color: #EA2B2B;
+  color: $c-red-dark;
 }
 
 .feedback-btn {
-  background: linear-gradient(135deg, #58CC02, #6FDD1A);
-  border-radius: 20px;
-  padding: 26px 70px;
-  box-shadow: 0 6px 0 #4A9F02;
-  transition: transform 0.1s;
-
-  &:active {
-    transform: translateY(3px);
-    box-shadow: 0 3px 0 #4A9F02;
-  }
+  @include flat-btn($c-green, $c-green-dark, $r-md);
+  padding: $s-5 70px;
 }
 
 .feedback-btn-text {
-  color: #fff;
-  font-size: 34px;
-  font-weight: 900;
+  color: $c-surface;
+  font-size: $fs-xl;
+  font-weight: $fw-black;
   letter-spacing: 2px;
 }
 
@@ -263,7 +250,7 @@
   top: 0;
   right: 0;
   bottom: 0;
-  background: rgba(0, 0, 0, 0.6);
+  background: $c-overlay;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -271,15 +258,13 @@
 }
 
 .result-card {
+  @include flat-card($c-surface, $r-2xl, $c-border);
   width: 82%;
-  background: #fff;
-  border-radius: 32px;
-  padding: 56px 40px;
+  padding: $s-9 $s-8;
   display: flex;
   flex-direction: column;
   align-items: center;
   text-align: center;
-  box-shadow: 0 8px 0 rgba(0, 0, 0, 0.12);
 }
 
 .result-emoji {
@@ -295,54 +280,45 @@
 
 .result-title {
   font-size: 44px;
-  font-weight: 900;
-  color: #3C3C3C;
-  margin-top: 20px;
+  font-weight: $fw-black;
+  color: $c-text;
+  margin-top: $s-4;
 }
 
 .result-xp {
-  font-size: 38px;
-  font-weight: 900;
-  color: #FFC800;
-  margin-top: 16px;
+  font-size: $fs-2xl;
+  font-weight: $fw-black;
+  color: $c-yellow-dark;
+  margin-top: $s-3;
 }
 
 .result-sub {
-  font-size: 28px;
-  color: #AFB3B5;
-  margin-top: 12px;
+  font-size: $fs-md;
+  color: $c-text-sub;
+  margin-top: $s-2;
   line-height: 1.6;
 }
 
 .result-btn {
+  @include flat-btn($c-green, $c-green-dark, $r-md);
   width: 100%;
-  background: linear-gradient(135deg, #58CC02, #6FDD1A);
-  border-radius: 20px;
-  padding: 28px 0;
-  margin-top: 40px;
-  box-shadow: 0 6px 0 #4A9F02;
-  transition: transform 0.1s;
-
-  &:active {
-    transform: translateY(3px);
-    box-shadow: 0 3px 0 #4A9F02;
-  }
+  padding: $s-6 0;
+  margin-top: $s-8;
 
   &.ghost {
-    background: #fff;
-    border: 3px solid #E5E5E5;
-    box-shadow: none;
-    margin-top: 20px;
+    background: $c-surface;
+    border-color: $c-border;
+    margin-top: $s-4;
   }
 }
 
 .result-btn-text {
-  color: #fff;
+  color: $c-surface;
   font-size: 32px;
-  font-weight: 900;
+  font-weight: $fw-black;
   letter-spacing: 1px;
 
   &.ghost {
-    color: #3C3C3C;
+    color: $c-text;
   }
 }

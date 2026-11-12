@@ -1,208 +1,409 @@
-/* 学习地图页 · 扁平卡通风格 */
+/* 学习地图页 · 一比一还原设计图（卡通草地背景 + 吉祥物 + 之字形关卡路径） */
+@use '../../styles/tokens' as *;
+
 .home {
   min-height: 100vh;
-  background: linear-gradient(180deg, #EAF7E0 0%, #F7F7F7 30%);
-  padding: 24px 24px 60px;
+  position: relative;
 }
 
-/* ===== 顶部状态栏 ===== */
-.stats {
+/* 全屏卡通背景 */
+.home-bg {
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+}
+
+.home-content {
+  position: relative;
+  z-index: 1;
+  padding: $s-3 $s-5 60px;
+}
+
+/* ===== 顶部：吉祥物 + 气泡 + 右侧连击/设置 ===== */
+.top-bar {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px 8px 20px;
+  align-items: flex-start;
 }
 
-.stat {
+.mascot {
+  width: 190px;
+  height: 190px;
+  margin-left: -16px;
+  margin-top: -10px;
+  flex-shrink: 0;
+}
+
+.bubble {
+  background: $c-surface;
+  border-radius: $r-lg;
+  padding: $s-2 $s-4;
+  margin-top: 30px;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.08);
+  position: relative;
+  flex-shrink: 1;
+  min-width: 0;
+}
+
+.bubble::before {
+  content: '';
+  position: absolute;
+  left: -12px;
+  top: 30px;
+  width: 24px;
+  height: 24px;
+  background: $c-surface;
+  border-radius: 6px;
+  transform: rotate(45deg);
+}
+
+.bubble-title {
+  display: block;
+  font-size: $fs-xl;
+  font-weight: $fw-black;
+  color: $c-text;
+}
+
+.bubble-sub {
+  display: flex;
+  align-items: center;
+  margin-top: 4px;
+}
+
+.bubble-sub-text {
+  font-size: $fs-sm;
+  color: $c-text-sub;
+  font-weight: $fw-semibold;
+}
+
+.bubble-arrow {
+  font-size: $fs-md;
+  color: $c-green;
+  font-weight: $fw-black;
+  margin-left: $s-1;
+}
+
+.top-right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  margin-left: auto;
+  gap: $s-1;
+  flex-shrink: 0;
+}
+
+.streak-pill {
   display: flex;
   align-items: center;
   gap: 6px;
+  background: $c-surface;
+  border-radius: $r-pill;
+  padding: 8px 20px;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.08);
 }
 
-.stat-icon {
-  font-size: 36px;
-  filter: drop-shadow(0 2px 0 rgba(0, 0, 0, 0.08));
+.streak-flame {
+  font-size: $fs-lg;
 }
 
-.stat-value {
-  font-size: 30px;
-  font-weight: 900;
-  letter-spacing: -0.5px;
-
-  &.stat-streak { color: var(--duo-orange); }
-  &.stat-heart { color: var(--duo-red); }
-  &.stat-xp { color: var(--duo-yellow); }
-  &.stat-level { color: var(--duo-green); }
+.streak-num {
+  font-size: $fs-lg;
+  font-weight: $fw-black;
+  color: $c-orange;
 }
 
-/* ===== 顶部横幅 ===== */
-.banner {
-  background: linear-gradient(135deg, #58CC02, #7FE21A);
-  border-radius: 28px;
-  padding: 40px 32px;
-  margin-bottom: 28px;
-  box-shadow: 0 8px 0 #4A9F02;
-  position: relative;
-  overflow: hidden;
-}
-
-.banner::after {
-  content: '';
-  position: absolute;
-  right: -20px;
-  top: -20px;
-  width: 120px;
-  height: 120px;
-  background: rgba(255, 255, 255, 0.15);
+.gear-btn {
+  width: 64px;
+  height: 64px;
+  background: $c-surface;
   border-radius: 50%;
-}
-
-.banner-title {
-  display: block;
-  color: #fff;
-  font-size: 46px;
-  font-weight: 900;
-  letter-spacing: 1px;
-  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.1);
-}
-
-.banner-sub {
-  display: block;
-  color: rgba(255, 255, 255, 0.95);
-  font-size: 26px;
-  margin-top: 10px;
-  font-weight: 600;
-}
-
-/* ===== 进行中/已完成单元 ===== */
-.unit {
-  border-radius: 28px;
-  padding: 28px 24px;
-  margin-bottom: 28px;
-  box-shadow: 0 8px 0 rgba(0, 0, 0, 0.12);
-}
-
-.unit-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 24px;
-}
-
-.unit-title {
-  color: #fff;
-  font-size: 34px;
-  font-weight: 900;
-  letter-spacing: 0.5px;
-  flex: 1;
-  text-shadow: 0 2px 0 rgba(0, 0, 0, 0.08);
-}
-
-.unit-progress {
-  color: #fff;
-  font-size: 26px;
-  font-weight: 900;
-  background: rgba(0, 0, 0, 0.16);
-  border-radius: 999px;
-  padding: 6px 20px;
-}
-
-/* 100 关网格 */
-.lesson-grid {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 14px;
-}
-
-.lesson-node {
-  width: calc((100% - 56px) / 5);
-  aspect-ratio: 1;
-  background: #fff;
-  border-radius: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.1);
-  transition: transform 0.1s;
-
-  &:active {
-    transform: translateY(2px);
-    box-shadow: 0 2px 0 rgba(0, 0, 0, 0.1);
-  }
-
-  &.locked {
-    opacity: 0.4;
-    box-shadow: none;
-  }
-
-  &.done {
-    background: #FFFBEB;
-    box-shadow: 0 4px 0 #E6A800;
-    border: 2px solid var(--duo-yellow);
-  }
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.08);
 }
 
-.lesson-node-icon {
-  font-size: 30px;
-  font-weight: 900;
-  color: #3C3C3C;
+.gear-icon {
+  font-size: $fs-lg;
 }
 
-/* ===== 锁定单元卡片 ===== */
-.unit-card {
-  border-radius: 28px;
-  padding: 32px 28px;
-  margin-bottom: 28px;
+/* ===== 今日目标卡片 ===== */
+.goal-card {
+  background: $c-surface;
+  border-radius: $r-xl;
+  padding: $s-3 $s-6;
+  margin-top: -20px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.1);
 }
 
-.locked-card {
-  background: #fff;
-  border: 3px dashed #D8D8D8;
+.goal-ring-wrap {
+  flex-shrink: 0;
+}
+
+.goal-ring {
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  background: conic-gradient($c-green 0deg, #7FE21A 240deg, #E8F0E4 240deg 360deg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.goal-ring-inner {
+  width: 108px;
+  height: 108px;
+  background: $c-surface;
+  border-radius: 50%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.goal-flame {
+  font-size: $fs-xl;
+  line-height: 1;
+}
+
+.goal-streak-num {
+  font-size: $fs-xl;
+  font-weight: $fw-black;
+  color: $c-text;
+  line-height: 1.1;
+}
+
+.goal-streak-label {
+  font-size: $fs-xs;
+  color: $c-text-sub;
+  font-weight: $fw-semibold;
+}
+
+.goal-right {
+  flex: 1;
+  margin-left: $s-6;
+  min-width: 0;
+}
+
+.goal-label {
+  display: block;
+  font-size: $fs-md;
+  color: $c-text-sub;
+  font-weight: $fw-bold;
+}
+
+.goal-value {
+  display: block;
+  font-size: $fs-display;
+  font-weight: $fw-black;
+  color: $c-text;
+  margin-top: 4px;
+}
+
+.goal-bar {
+  height: 16px;
+  background: $c-border;
+  border-radius: 8px;
+  overflow: hidden;
+  margin-top: $s-1;
+}
+
+.goal-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, $c-green, #7FE21A);
+  border-radius: 8px;
+  transition: width 0.3s;
+}
+
+.goal-calendar {
+  font-size: 44px;
+  margin-left: $s-4;
+  flex-shrink: 0;
+}
+
+/* ===== 单元区 ===== */
+.unit-block {
+  margin-top: $s-7;
+}
+
+.unit-head {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: $s-1;
 }
 
-.locked-left {
+/* 蓝色缎带横幅 */
+.ribbon {
+  background: linear-gradient(135deg, #4A9FE8, $c-blue);
+  border-radius: $r-pill;
+  padding: $s-1 $s-6 $s-1 $s-4;
   display: flex;
   align-items: center;
-  flex: 1;
+  gap: $s-1;
+  box-shadow: 0 5px 0 #2E86C8;
+  position: relative;
 }
 
-.locked-icon {
-  font-size: 52px;
-  margin-right: 20px;
-  filter: grayscale(1);
-  opacity: 0.7;
+.ribbon-pin {
+  font-size: $fs-md;
 }
 
-.locked-info {
+.ribbon-title {
+  font-size: $fs-md;
+  font-weight: $fw-black;
+  color: $c-surface;
+  letter-spacing: 0.5px;
+}
+
+.locked-ribbon {
+  opacity: 0.75;
+}
+
+.unit-count {
+  font-size: $fs-md;
+  font-weight: $fw-black;
+  color: $c-text;
+}
+
+/* ===== 之字形关卡路径 ===== */
+.path {
+  position: relative;
+  padding: $s-3 0;
+}
+
+/* 中间虚线路径 */
+.path-dashed {
+  position: absolute;
+  left: 50%;
+  top: 40px;
+  bottom: 40px;
+  width: 0;
+  border-left: 6px dashed rgba(255, 255, 255, 0.9);
+  transform: translateX(-50%);
+}
+
+.path-node {
+  position: relative;
+  width: 46%;
+  z-index: 1;
+  margin-bottom: 40px;
+
+  &.left {
+    margin-right: auto;
+    margin-left: 2%;
+  }
+
+  &.right {
+    margin-left: auto;
+    margin-right: 2%;
+  }
+
+  &.locked {
+    opacity: 0.75;
+  }
+}
+
+.node-card {
+  background: #FFF6DF;
+  border-radius: $r-lg;
+  padding: 10px;
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.12);
+  transition: transform 0.1s;
+}
+
+.path-node:not(.locked) .node-card:active {
+  transform: translateY(3px);
+  box-shadow: 0 3px 0 rgba(0, 0, 0, 0.12);
+}
+
+.node-img {
+  width: 100%;
+  height: 220px;
+  border-radius: 14px;
+  display: block;
+}
+
+.node-meta {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: $s-1;
+  padding: $s-1 0 4px;
 }
 
-.locked-title {
-  font-size: 30px;
-  font-weight: 800;
-  color: #3C3C3C;
+.node-star {
+  font-size: $fs-md;
 }
 
-.locked-sub {
-  font-size: 24px;
-  color: #AFB3B5;
-  margin-top: 8px;
+.node-count {
+  font-size: $fs-md;
+  font-weight: $fw-black;
+  color: $c-text;
 }
 
-.locked-count {
-  font-size: 26px;
-  color: #AFB3B5;
-  font-weight: 700;
+/* 角标：完成 ✓ / 锁定 🔒 */
+.node-badge {
+  position: absolute;
+  top: -14px;
+  right: -14px;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.12);
+}
+
+.done-badge {
+  background: $c-green;
+}
+
+.badge-check {
+  color: $c-surface;
+  font-size: $fs-lg;
+  font-weight: $fw-black;
+}
+
+.lock-badge {
+  background: $c-border;
+}
+
+.badge-lock {
+  font-size: $fs-sm;
+}
+
+/* ===== 锁定单元 ===== */
+.locked-tip-card {
+  background: rgba(255, 255, 255, 0.92);
+  border-radius: $r-lg;
+  padding: $s-6 $s-6;
+  display: flex;
+  align-items: center;
+  gap: $s-4;
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.08);
+}
+
+.locked-tip-icon {
+  font-size: 48px;
+}
+
+.locked-tip-text {
+  font-size: $fs-md;
+  color: #7A7A7A;
+  line-height: 1.6;
 }
 
 .footer-tip {
   text-align: center;
-  padding: 20px 30px;
-  color: #AFB3B5;
-  font-size: 24px;
+  padding: 30px 30px 20px;
+  color: #7A9B6D;
+  font-size: $fs-sm;
   line-height: 1.6;
+  font-weight: $fw-semibold;
 }

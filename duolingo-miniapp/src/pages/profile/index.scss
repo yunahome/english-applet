@@ -1,128 +1,117 @@
 /* 我的页 · 扁平卡通风格 */
+@use '../../styles/tokens' as *;
+
 .profile {
   min-height: 100vh;
-  background: linear-gradient(180deg, #EAF7E0 0%, #F7F7F7 30%);
-  padding: 24px 24px 60px;
+  background: $c-bg;
+  padding: $s-5 $s-5 60px;
 }
 
 .card {
-  background: #fff;
-  border-radius: 28px;
-  padding: 40px 32px;
+  @include flat-card($c-surface, $r-xl, $c-border);
+  padding: $s-8 $s-7;
 }
 
 .head-card {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-bottom: 28px;
-  box-shadow: 0 8px 0 rgba(0, 0, 0, 0.06);
+  margin-bottom: $s-6;
 }
 
 .avatar {
   width: 140px;
   height: 140px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #58CC02, #7FE21A);
+  background: $c-green;
+  border: $bw-thick solid $c-green-dark;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 80px;
-  box-shadow: 0 6px 0 #4A9F02;
 }
 
 .nickname {
-  font-size: 38px;
-  font-weight: 900;
-  color: #3C3C3C;
-  margin-top: 20px;
+  font-size: $fs-2xl;
+  font-weight: $fw-black;
+  color: $c-text;
+  margin-top: $s-4;
 }
 
 .level-tag {
-  margin-top: 12px;
-  background: #D7FFB8;
-  color: #58A700;
-  font-size: 26px;
-  font-weight: 800;
-  padding: 8px 24px;
-  border-radius: 999px;
+  @include pill($c-green-soft, $c-green-deep);
+  margin-top: $s-2;
+  font-size: $fs-md;
+  font-weight: $fw-bold;
+  padding: $s-1 $s-5;
 }
 
 .level-bar {
   width: 100%;
   height: 24px;
-  background: #E5E5E5;
-  border-radius: 12px;
+  background: $c-surface;
+  border: $bw solid $c-border;
+  border-radius: $r-pill;
   overflow: hidden;
-  margin-top: 32px;
+  margin-top: $s-7;
 }
 
 .level-bar-fill {
   height: 100%;
-  background: linear-gradient(90deg, #FFC800, #FFD84D);
-  border-radius: 12px;
+  background: $c-yellow;
+  border-radius: $r-pill;
   transition: width 0.3s;
 }
 
 .level-tip {
-  font-size: 24px;
-  color: #AFB3B5;
-  margin-top: 12px;
+  font-size: $fs-sm;
+  color: $c-text-sub;
+  margin-top: $s-2;
 }
 
 .grid {
   display: flex;
   flex-wrap: wrap;
-  gap: 20px;
-  margin-bottom: 28px;
+  gap: $s-4;
+  margin-bottom: $s-6;
 }
 
 .grid-item {
+  @include flat-card($c-surface, $r-lg, $c-border);
   width: calc(50% - 10px);
-  background: #fff;
-  border-radius: 24px;
-  padding: 32px 24px;
+  padding: $s-7 $s-5;
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.06);
 }
 
 .grid-num {
-  font-size: 40px;
-  font-weight: 900;
+  font-size: $fs-4xl;
+  font-weight: $fw-black;
   letter-spacing: -0.5px;
 
-  &.streak { color: #FF9600; }
-  &.xp { color: #FFC800; }
-  &.heart { color: #FF4B4B; }
-  &.done { color: #58CC02; }
+  &.streak { color: $c-orange; }
+  &.xp { color: $c-yellow-dark; }
+  &.heart { color: $c-red; }
+  &.done { color: $c-green-deep; }
 }
 
 .grid-label {
-  font-size: 24px;
-  color: #AFB3B5;
-  margin-top: 12px;
+  font-size: $fs-sm;
+  color: $c-text-sub;
+  margin-top: $s-2;
 }
 
 .btn.danger {
-  background: linear-gradient(135deg, #FF5B5B, #FF4B4B);
-  border-radius: 20px;
-  padding: 28px 0;
+  @include flat-btn($c-red, $c-red-dark, $r-md);
+  padding: $s-6 0;
   text-align: center;
-  box-shadow: 0 6px 0 #D93636;
-  transition: transform 0.1s;
-
-  &:active {
-    transform: translateY(3px);
-    box-shadow: 0 3px 0 #D93636;
-  }
 }
 
 .btn-text {
-  color: #fff;
+  color: $c-surface;
   font-size: 32px;
-  font-weight: 900;
+  font-weight: $fw-black;
   letter-spacing: 1px;
 }
 
@@ -130,8 +119,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 48px;
-  color: #AFB3B5;
-  font-size: 24px;
+  margin-top: $s-8;
+  color: $c-text-sub;
+  font-size: $fs-sm;
   line-height: 1.8;
 }

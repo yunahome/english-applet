@@ -25,13 +25,13 @@
 # 安装依赖
 npm install
 
-# 微信小程序（微信开发者工具导入项目根目录，或 dist/ 目录）
+# 微信小程序（微信开发者工具导入项目根目录，已配置 miniprogramRoot 为 dist/weapp）
 npm run dev:weapp
 
-# 抖音小程序（抖音开发者工具导入 dist/ 目录）
+# 抖音小程序（抖音开发者工具导入 dist/tt 目录）
 npm run dev:tt
 
-# 生产构建
+# 生产构建（微信产物在 dist/weapp，抖音产物在 dist/tt）
 npm run build:weapp
 npm run build:tt
 ```

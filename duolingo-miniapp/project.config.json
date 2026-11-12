@@ -1,5 +1,5 @@
 {
-  "miniprogramRoot": "dist/",
+  "miniprogramRoot": "dist/weapp/",
   "cloudfunctionRoot": "cloudfunctions/",
   "projectname": "duolingo-miniapp",
   "appid": "wx9ed13f9f8cbcf771",

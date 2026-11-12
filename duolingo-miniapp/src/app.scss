@@ -1,34 +1,41 @@
 /* ============================================================
-   Duo英语 · 扁平卡通风格全局样式
-   设计语言：多邻国式「厚底按钮 + 大圆角 + 高饱和纯色 + 立体阴影」
+   Duo英语 · 全局样式（扁平卡通风格）
+   设计语言：纯色块 + 大圆角 + 统一描边 + 足量留白
+   约束：无渐变、无投影、无玻璃拟态
    ============================================================ */
 
-/* 设计变量 */
+@use './styles/tokens' as *;
+
+/* 设计变量（保留 CSS 变量出口，供后续内联/动态场景使用；
+   页面样式统一走 SCSS token，避免各页硬编码） */
 page {
-  --duo-green: #58CC02;
-  --duo-green-dark: #58A700;
-  --duo-green-light: #D7FFB8;
-  --duo-blue: #1CB0F6;
-  --duo-blue-dark: #1899D6;
-  --duo-blue-light: #DDF4FF;
-  --duo-yellow: #FFC800;
-  --duo-orange: #FF9600;
-  --duo-red: #FF4B4B;
-  --duo-red-dark: #EA2B2B;
-  --duo-purple: #CE82FF;
-  --duo-text: #3C3C3C;
-  --duo-text-sub: #AFB3B5;
-  --duo-border: #E5E5E5;
-  --duo-bg: #F7F7F7;
+  --duo-green: #{$c-green};
+  --duo-green-dark: #{$c-green-dark};
+  --duo-green-light: #{$c-green-soft};
+  --duo-blue: #{$c-blue};
+  --duo-blue-dark: #{$c-blue-dark};
+  --duo-blue-light: #{$c-blue-soft};
+  --duo-yellow: #{$c-yellow};
+  --duo-orange: #{$c-orange};
+  --duo-red: #{$c-red};
+  --duo-red-dark: #{$c-red-dark};
+  --duo-purple: #{$c-purple};
+  --duo-text: #{$c-text};
+  --duo-text-sub: #{$c-text-sub};
+  --duo-border: #{$c-border};
+  --duo-bg: #{$c-bg};
 
   font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', sans-serif;
-  background: var(--duo-bg);
-  color: var(--duo-text);
+  background: $c-bg;
+  color: $c-text;
   font-size: 32px;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 }
 
-view, text, button {
+view,
+text,
+button {
   box-sizing: border-box;
 }
 
