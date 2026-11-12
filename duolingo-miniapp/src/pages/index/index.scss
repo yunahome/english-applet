@@ -246,39 +246,36 @@
   margin-bottom: $s-1;
 }
 
-/* 蓝色旗帜缎带：容器（含燕尾）+ 主幅子元素（保证燕尾在主幅下层） */
+/* 蓝色旗帜缎带：容器 + 左右燕尾（真实元素）+ 主幅 */
 .ribbon {
   position: relative;
   display: inline-block;
 }
 
-/* 左侧燕尾 */
-.ribbon::before {
-  content: '';
+/* 燕尾通用：用 border 三角实现，WXSS 稳定渲染 */
+.ribbon-tail {
   position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 0;
+  height: 0;
+  border-top: 22px solid transparent;
+  border-bottom: 22px solid transparent;
+}
+
+/* 左侧燕尾（向右尖） */
+.ribbon-tail-left {
   left: -16px;
-  top: 7px;
-  width: 36px;
-  height: 78%;
-  background: #2E86C8;
-  clip-path: polygon(0 0, 100% 0, 55% 50%, 100% 100%, 0 100%);
-  border-radius: $r-xs 0 0 $r-xs;
+  border-right: 18px solid #2E86C8;
 }
 
-/* 右侧燕尾 */
-.ribbon::after {
-  content: '';
-  position: absolute;
+/* 右侧燕尾（向左尖） */
+.ribbon-tail-right {
   right: -16px;
-  top: 7px;
-  width: 36px;
-  height: 78%;
-  background: #2E86C8;
-  clip-path: polygon(0 0, 100% 0, 45% 50%, 0 100%);
-  border-radius: 0 $r-xs $r-xs 0;
+  border-left: 18px solid #2E86C8;
 }
 
-/* 主幅（盖在燕尾上方） */
+/* 主幅（盖在燕尾接缝上） */
 .ribbon-main {
   background: linear-gradient(135deg, #54B1F2, $c-blue);
   border-radius: $r-pill;

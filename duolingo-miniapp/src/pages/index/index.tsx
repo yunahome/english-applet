@@ -103,6 +103,8 @@ export default function Index() {
             return (
               <View key={unit.id} className='unit-block locked'>
                 <View className='ribbon locked-ribbon'>
+                  <View className='ribbon-tail ribbon-tail-left' />
+                  <View className='ribbon-tail ribbon-tail-right' />
                   <View className='ribbon-main'>
                     <View className='ribbon-pin' />
                     <Text className='ribbon-title'>{unit.title.replace(/·.*$/, '')}</Text>
@@ -123,6 +125,8 @@ export default function Index() {
             <View key={unit.id} className='unit-block'>
               <View className='unit-head'>
                 <View className='ribbon'>
+                  <View className='ribbon-tail ribbon-tail-left' />
+                  <View className='ribbon-tail ribbon-tail-right' />
                   <View className='ribbon-main'>
                     <View className='ribbon-pin' />
                     <Text className='ribbon-title'>{unit.title.replace(/·.*$/, '')}</Text>
