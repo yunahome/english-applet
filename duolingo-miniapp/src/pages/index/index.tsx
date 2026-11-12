@@ -3,17 +3,19 @@ import Taro from '@tarojs/taro'
 import { View, Text, Image } from '@tarojs/components'
 import { COURSE, LESSONS_PER_UNIT } from '../../data/course'
 import { useApp, MAX_HEARTS } from '../../store/app-store'
-import mascotImg from '../../assets/home/mascot.png'
 import './index.scss'
+
+// 图片统一放在 src/assets/home，构建时由 copy 插件复制到 /assets/home
+const ASSET = '/assets/home'
 
 // 关卡插图（6 张循环使用）
 const LESSON_IMGS = [
-  require('../../assets/home/lesson-plane.jpg'),
-  require('../../assets/home/lesson-house.jpg'),
-  require('../../assets/home/lesson-school.jpg'),
-  require('../../assets/home/lesson-book.jpg'),
-  require('../../assets/home/lesson-food.jpg'),
-  require('../../assets/home/lesson-cat.jpg')
+  `${ASSET}/lesson-plane.jpg`,
+  `${ASSET}/lesson-house.jpg`,
+  `${ASSET}/lesson-school.jpg`,
+  `${ASSET}/lesson-book.jpg`,
+  `${ASSET}/lesson-food.jpg`,
+  `${ASSET}/lesson-cat.jpg`
 ]
 
 export default function Index() {
@@ -44,12 +46,12 @@ export default function Index() {
   return (
     <View className='home'>
       {/* 全屏卡通背景 */}
-      <Image className='home-bg' src={require('../../assets/home/bg.jpg')} mode='aspectFill' />
+      <Image className='home-bg' src={`${ASSET}/bg.jpg`} mode='aspectFill' />
 
       <View className='home-content'>
         {/* 顶部：吉祥物 + 气泡 + 连击/设置 */}
         <View className='top-bar'>
-          <Image className='mascot' src={mascotImg} mode='aspectFit' />
+          <Image className='mascot' src={`${ASSET}/mascot.png`} mode='aspectFit' />
           <View className='bubble'>
             <Text className='bubble-title'>Hello!</Text>
             <View className='bubble-sub'>
