@@ -103,12 +103,8 @@ export default function Index() {
             return (
               <View key={unit.id} className='unit-block locked'>
                 <View className='ribbon locked-ribbon'>
-                  <View className='ribbon-tail ribbon-tail-left' />
-                  <View className='ribbon-tail ribbon-tail-right' />
-                  <View className='ribbon-main'>
-                    <View className='ribbon-pin' />
-                    <Text className='ribbon-title'>{unit.title.replace(/·.*$/, '')}</Text>
-                  </View>
+                  <Image className='ribbon-bg' src={`${ASSET}/ribbon.png`} mode='scaleToFill' />
+                  <Text className='ribbon-title'>{unit.title}</Text>
                 </View>
                 <View className='locked-tip-card'>
                   <Text className='locked-tip-icon'>🔒</Text>
@@ -125,12 +121,8 @@ export default function Index() {
             <View key={unit.id} className='unit-block'>
               <View className='unit-head'>
                 <View className='ribbon'>
-                  <View className='ribbon-tail ribbon-tail-left' />
-                  <View className='ribbon-tail ribbon-tail-right' />
-                  <View className='ribbon-main'>
-                    <View className='ribbon-pin' />
-                    <Text className='ribbon-title'>{unit.title.replace(/·.*$/, '')}</Text>
-                  </View>
+                  <Image className='ribbon-bg' src={`${ASSET}/ribbon.png`} mode='scaleToFill' />
+                  <Text className='ribbon-title'>{unit.title}</Text>
                 </View>
                 <Text className='unit-count'>
                   {done}/{LESSONS_PER_UNIT} ›
