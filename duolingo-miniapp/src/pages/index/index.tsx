@@ -49,49 +49,51 @@ export default function Index() {
       <Image className='home-bg' src={`${ASSET}/bg.jpg`} mode='aspectFill' />
 
       <View className='home-content'>
-        {/* 顶部：吉祥物 + 气泡 + 连击/设置 */}
-        <View className='top-bar'>
-          <Image className='mascot' src={`${ASSET}/mascot.png`} mode='aspectFit' />
-          <View className='bubble'>
-            <Text className='bubble-title'>Hello!</Text>
-            <View className='bubble-sub'>
-              <Text className='bubble-sub-text'>Let's keep learning!</Text>
-              <Text className='bubble-arrow'>›</Text>
+        {/* 顶部固定区（滚动时不滑动）：吉祥物 + 气泡 + 连击/设置 + 今日目标卡 */}
+        <View className='home-header'>
+          <View className='top-bar'>
+            <Image className='mascot' src={`${ASSET}/mascot.png`} mode='aspectFit' />
+            <View className='bubble'>
+              <Text className='bubble-title'>Hello!</Text>
+              <View className='bubble-sub'>
+                <Text className='bubble-sub-text'>Let's keep learning!</Text>
+                <Text className='bubble-arrow'>›</Text>
+              </View>
             </View>
-          </View>
-          <View className='top-right'>
-            <View className='streak-pill'>
-              <Text className='streak-flame'>🔥</Text>
-              <Text className='streak-num'>{state.streak}</Text>
-            </View>
-            <View className='gear-btn' onClick={goProfile}>
-              <Text className='gear-icon'>⚙️</Text>
-            </View>
-          </View>
-        </View>
-
-        {/* 今日目标卡片 */}
-        <View className='goal-card'>
-          <View className='goal-ring-wrap'>
-            <View className='goal-ring'>
-              <View className='goal-ring-inner'>
-                <Text className='goal-flame'>🔥</Text>
-                <Text className='goal-streak-num'>{state.streak}</Text>
-                <Text className='goal-streak-label'>day streak</Text>
+            <View className='top-right'>
+              <View className='streak-pill'>
+                <Text className='streak-flame'>🔥</Text>
+                <Text className='streak-num'>{state.streak}</Text>
+              </View>
+              <View className='gear-btn' onClick={goProfile}>
+                <Text className='gear-icon'>⚙️</Text>
               </View>
             </View>
           </View>
-          <View className='goal-right'>
-            <Text className='goal-label'>Today's Goal</Text>
-            <Text className='goal-value'>20 min</Text>
-            <View className='goal-bar'>
-              <View
-                className='goal-bar-fill'
-                style={{ width: `${Math.min(100, state.xp % 100)}%` }}
-              />
+
+          {/* 今日目标卡片 */}
+          <View className='goal-card'>
+            <View className='goal-ring-wrap'>
+              <View className='goal-ring'>
+                <View className='goal-ring-inner'>
+                  <Text className='goal-flame'>🔥</Text>
+                  <Text className='goal-streak-num'>{state.streak}</Text>
+                  <Text className='goal-streak-label'>day streak</Text>
+                </View>
+              </View>
             </View>
+            <View className='goal-right'>
+              <Text className='goal-label'>Today's Goal</Text>
+              <Text className='goal-value'>20 min</Text>
+              <View className='goal-bar'>
+                <View
+                  className='goal-bar-fill'
+                  style={{ width: `${Math.min(100, state.xp % 100)}%` }}
+                />
+              </View>
+            </View>
+            <Text className='goal-calendar'>📅</Text>
           </View>
-          <Text className='goal-calendar'>📅</Text>
         </View>
 
         {COURSE.map((unit, unitIndex) => {

@@ -19,8 +19,19 @@
 .home-content {
   position: relative;
   z-index: 1;
-  // 自定义导航：内容避开状态栏 + 胶囊按钮区域（整体下移）
-  padding: calc(env(safe-area-inset-top) + 150px) $s-5 60px;
+  // 头部已固定悬浮，内容区只需留出头部占位高度
+  padding: calc(env(safe-area-inset-top) + 450px) $s-5 60px;
+}
+
+/* ===== 顶部固定头（滚动时不滑动）：吉祥物 + 气泡 + 连击/设置 + 目标卡 ===== */
+.home-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  // 整体上移：150px → 80px
+  padding: calc(env(safe-area-inset-top) + 80px) $s-5 0;
 }
 
 /* ===== 顶部：吉祥物 + 气泡 + 右侧连击/设置 ===== */
