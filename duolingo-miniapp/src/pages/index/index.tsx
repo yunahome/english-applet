@@ -51,6 +51,8 @@ export default function Index() {
       <View className='home-content'>
         {/* 顶部固定区（滚动时不滑动）：吉祥物 + 气泡 + 连击/设置 + 今日目标卡 */}
         <View className='home-header'>
+          {/* 头部背景：与页面背景同一张图同尺寸，像素级无缝衔接，同时挡住滚上来的关卡 */}
+          <Image className='header-bg' src={`${ASSET}/bg.jpg`} mode='aspectFill' />
           <View className='top-bar'>
             <Image className='mascot' src={`${ASSET}/mascot.png`} mode='aspectFit' />
             <View className='bubble'>

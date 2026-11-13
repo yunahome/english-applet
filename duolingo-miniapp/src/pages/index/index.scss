@@ -24,7 +24,7 @@
 }
 
 /* ===== 顶部固定头（滚动时不滑动）：吉祥物 + 气泡 + 设置 + 目标卡 ===== */
-/* 不透明天空色底：关卡滚上去时不会从头部的缝隙里透出来 */
+/* 背景用与页面同一张 bg.jpg 同尺寸裁切 → 与页面背景无缝衔接，且不透明挡住关卡 */
 .home-header {
   position: fixed;
   top: 0;
@@ -32,15 +32,26 @@
   right: 0;
   z-index: 3;
   padding: calc(env(safe-area-inset-top) + 80px) $s-5 16px;
-  background: linear-gradient(180deg, #93CFEA 0%, #A9DCF1 70%, #BCE7F7 100%);
+  overflow: hidden;
 }
 
-/* ===== 顶部：吉祥物 + 气泡 + 右侧连击/设置 ===== */
+.header-bg {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+}
+
 .top-bar {
+  position: relative;
+  z-index: 1;
   display: flex;
   align-items: flex-start;
 }
 
+/* ===== 顶部：吉祥物 + 气泡 + 右侧连击/设置 ===== */
 .mascot {
   width: 250px;
   height: 227px;
@@ -231,7 +242,7 @@
 }
 
 .unit-head {
-  // 缎带行吸顶固定：滚到该单元时钉在固定头下方
+  // 缎带行吸顶固定：滚到该单元时钉在固定头下方；按设计图直接悬浮在背景上（无色带）
   position: sticky;
   top: calc(env(safe-area-inset-top) + 445px);
   z-index: 2;
@@ -239,10 +250,6 @@
   align-items: center;
   justify-content: space-between;
   margin-bottom: $s-1;
-  padding: 10px 20px 10px 0;
-  border-radius: 24px;
-  // 不透明底，防止关卡从缎带行两侧透出
-  background: linear-gradient(180deg, #A9DCF1, #C0E6F7);
 }
 
 /* 蓝色旗帜缎带：Pillow 预绘底图（含两端 V 形凹口折翼 + 黄色图钉）+ 文字叠加 */
@@ -297,7 +304,7 @@
 
 /* 节点之间的弯曲虚线（S 形走向） */
 .path-connector {
-  height: 52px;
+  height: 36px;
   z-index: 0;
 
   // 左节点 → 右节点：右上角圆弧
