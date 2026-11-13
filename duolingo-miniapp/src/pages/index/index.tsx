@@ -61,10 +61,6 @@ export default function Index() {
               </View>
             </View>
             <View className='top-right'>
-              <View className='streak-pill'>
-                <Text className='streak-flame'>🔥</Text>
-                <Text className='streak-num'>{state.streak}</Text>
-              </View>
               <View className='gear-btn' onClick={goProfile}>
                 <Text className='gear-icon'>⚙️</Text>
               </View>

@@ -23,15 +23,16 @@
   padding: calc(env(safe-area-inset-top) + 450px) $s-5 60px;
 }
 
-/* ===== 顶部固定头（滚动时不滑动）：吉祥物 + 气泡 + 连击/设置 + 目标卡 ===== */
+/* ===== 顶部固定头（滚动时不滑动）：吉祥物 + 气泡 + 设置 + 目标卡 ===== */
+/* 不透明天空色底：关卡滚上去时不会从头部的缝隙里透出来 */
 .home-header {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   z-index: 3;
-  // 整体上移：150px → 80px
-  padding: calc(env(safe-area-inset-top) + 80px) $s-5 0;
+  padding: calc(env(safe-area-inset-top) + 80px) $s-5 16px;
+  background: linear-gradient(180deg, #93CFEA 0%, #A9DCF1 70%, #BCE7F7 100%);
 }
 
 /* ===== 顶部：吉祥物 + 气泡 + 右侧连击/设置 ===== */
@@ -104,28 +105,7 @@
   flex-direction: column;
   align-items: flex-end;
   margin-left: auto;
-  gap: $s-1;
   flex-shrink: 0;
-}
-
-.streak-pill {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: $c-surface;
-  border-radius: $r-pill;
-  padding: 8px 20px;
-  box-shadow: 0 4px 0 rgba(0, 0, 0, 0.08);
-}
-
-.streak-flame {
-  font-size: $fs-lg;
-}
-
-.streak-num {
-  font-size: $fs-lg;
-  font-weight: $fw-black;
-  color: $c-orange;
 }
 
 .gear-btn {
@@ -247,14 +227,22 @@
 
 /* ===== 单元区 ===== */
 .unit-block {
-  margin-top: $s-7;
+  margin-top: 12px; // 缎带上移：32 → 12
 }
 
 .unit-head {
+  // 缎带行吸顶固定：滚到该单元时钉在固定头下方
+  position: sticky;
+  top: calc(env(safe-area-inset-top) + 445px);
+  z-index: 2;
   display: flex;
   align-items: center;
   justify-content: space-between;
   margin-bottom: $s-1;
+  padding: 10px 20px 10px 0;
+  border-radius: 24px;
+  // 不透明底，防止关卡从缎带行两侧透出
+  background: linear-gradient(180deg, #A9DCF1, #C0E6F7);
 }
 
 /* 蓝色旗帜缎带：Pillow 预绘底图（含两端 V 形凹口折翼 + 黄色图钉）+ 文字叠加 */
