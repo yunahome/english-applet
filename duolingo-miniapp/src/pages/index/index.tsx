@@ -153,12 +153,12 @@ export default function Index() {
                       >
                         <View className='node-card'>
                           <Image className='node-img' src={img} mode='aspectFill' />
-                          <View className='node-meta'>
-                            <Text className='node-star'>⭐</Text>
-                            <Text className='node-count'>
-                              {lessonDone ? 3 : 0}/3
-                            </Text>
-                          </View>
+                        <View className='node-meta'>
+                          <Text className='node-star'>⭐</Text>
+                          <Text className='node-count'>
+                            {idx + 1}/{LESSONS_PER_UNIT}
+                          </Text>
+                        </View>
                         </View>
                         {/* 角标：已完成 ✓ / 未解锁 🔒 */}
                         {lessonDone && (
